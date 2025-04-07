@@ -6,7 +6,7 @@ Feature: Webform functionality
     Given I navigate to "/selenium/web/web-form.html" on product "SELENIUM"
     When I fill input by id "my-text-id" with text <username>
     And I click button by text "Submit"
-    Then The class "lead" should contain text "Received!"
+    Then the class "lead" should contain text "Received!"
 
     Examples:
       | username       |
@@ -18,7 +18,7 @@ Feature: Webform functionality
     Given I navigate to "/selenium/web/web-form.html" on product "SELENIUM"
     And I fill input by name "my-password" for user <username>
     And I click button by text "Submit"
-    Then The class "lead" should contain text "Received!"
+    Then the class "lead" should contain text "Received!"
 
     Examples:
       | username       |
@@ -30,7 +30,7 @@ Feature: Webform functionality
     Given I navigate to "/selenium/web/web-form.html" on product "SELENIUM"
     And I select <option> from the dropdown titled "Dropdown (datalist)"
     And I click button by text "Submit"
-    Then The class "lead" should contain text "Received!"
+    Then the class "lead" should contain text "Received!"
 
     Examples:
       | option          |

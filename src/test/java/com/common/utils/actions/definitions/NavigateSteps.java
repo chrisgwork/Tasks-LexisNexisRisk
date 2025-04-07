@@ -23,7 +23,7 @@ public class NavigateSteps {
                 .to(Product.name.valueOf(product.toUpperCase()));
     }
 
-    @Then("The URL will contain {string}")
+    @Then("the URL will contain {string}")
     public void theURLWillContain(String expectedUrlPart) {
         WebDriver driver = DriverManager.getDriver();
 
@@ -33,7 +33,7 @@ public class NavigateSteps {
                 currentUrl.contains(expectedUrlPart));
     }
 
-    @Then("The URL will not contain {string}")
+    @Then("the URL will not contain {string}")
     public void theURLWillNotContain(String expectedUrlPart) {
         WebDriver driver = DriverManager.getDriver();
 

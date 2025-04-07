@@ -32,7 +32,7 @@ public class ButtonSteps {
                 .click();
     }
 
-    @Then("The button with data test id {string} is visible")
+    @Then("the button with data test id {string} is visible")
     public void theButtonDataTestIdIsVisible(String dataTestId) {
         boolean isVisible = new Button(DriverManager.getDriver())
                 .byDataTestId(dataTestId)
@@ -41,7 +41,7 @@ public class ButtonSteps {
         assertTrue("The button with data test id " + dataTestId + " is not visible", isVisible);
     }
 
-    @Then("The button with data test id {string} is not visible")
+    @Then("the button with data test id {string} is not visible")
     public void theButtonDataTestIdIsNotVisible(String dataTestId) {
         boolean isVisible = new Button(DriverManager.getDriver())
                 .byDataTestId(dataTestId)
@@ -50,7 +50,7 @@ public class ButtonSteps {
         assertFalse("The button with data test id " + dataTestId + " is visible", isVisible);
     }
 
-    @Then("The button in class {string} containing label {string} and data test id {string} is visible")
+    @Then("the button in class {string} containing label {string} and data test id {string} is visible")
     public void theButtonInClassContainingLabelAndDataTestIdIsVisible(String className, String label, String dataTestId) {
         boolean isVisible = new Button(DriverManager.getDriver())
                 .inClass(className)
