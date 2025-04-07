@@ -16,19 +16,17 @@ This is a test automation framework built using **Selenium**, **Java 18**, and *
 
 ```
 src/
-├── main/
-│   └── java/
-│       └── com.common.utils.actions/
-│           ├── drivers/            # Custom Selenium wrapper logic
-│           ├── definitions/        # Step definitions for Cucumber
-│           └── utils/              # Helpers for filtering elements, indexes, etc.
 └── test/
+    ├── java/
+    │   └── com.common.utils.actions/
+    │       ├── drivers/            # Custom Selenium wrapper logic
+    │       ├── definitions/        # Step definitions for Cucumber
+    │       └── utils/              # Helpers for filtering elements, indexes, etc.
     └── resources/
         └── features/
             └── selenium/
                 └── ui/
                     └── webform.feature
-
 ```
 
 ##  Set Up
