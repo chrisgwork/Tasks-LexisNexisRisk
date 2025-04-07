@@ -1,7 +1,7 @@
 @API
 Feature: GET Product
 
-  Scenario: JIRA-1035 - GET /productList - 200
+  Scenario: GET /productList - 200
 
     # Sending HTTP request
     * url automationPracticeUrlAPI

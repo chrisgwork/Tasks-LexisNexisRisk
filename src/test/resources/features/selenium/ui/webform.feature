@@ -1,16 +1,41 @@
-@UI @solo
-Feature: Login functionality
+@UI
+Feature: Webform functionality
 
-  @login
-  Scenario Outline: <JIRA_ID> - Login - User can login successfully - User <username>
+  @webform
+  Scenario Outline: Login - User can fill their username - User <username>
     Given I navigate to "/selenium/web/web-form.html" on product "SELENIUM"
     When I fill input by id "my-text-id" with text <username>
-    And I fill input by name "my-password" for user <username>
-    And I select "San Francisco" from the dropdown titled "Dropdown (datalist)"
     And I click button by text "Submit"
     Then The class "lead" should contain text "Received!"
 
     Examples:
-      | JIRA_ID   | username       |
-      | JIRA-1000 | "exampleuser1" |
-#      | JIRA-1001 | "exampleuser2" |
+      | username       |
+      | "exampleuser1" |
+      | "exampleuser2" |
+
+  @webform
+  Scenario Outline: Login - User can fill their password - User <username>
+    Given I navigate to "/selenium/web/web-form.html" on product "SELENIUM"
+    And I fill input by name "my-password" for user <username>
+    And I click button by text "Submit"
+    Then The class "lead" should contain text "Received!"
+
+    Examples:
+      | username       |
+      | "exampleuser1" |
+      | "exampleuser2" |
+
+  @webform
+  Scenario Outline: Login - User can select country from drop down - No User
+    Given I navigate to "/selenium/web/web-form.html" on product "SELENIUM"
+    And I select <option> from the dropdown titled "Dropdown (datalist)"
+    And I click button by text "Submit"
+    Then The class "lead" should contain text "Received!"
+
+    Examples:
+      | option          |
+      | "San Francisco" |
+      | "New York"      |
+      | "Seattle"       |
+      | "Los Angeles"   |
+      | "Chicago"       |
