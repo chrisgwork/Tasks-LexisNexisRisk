@@ -26,7 +26,7 @@ Feature: Webform functionality
       | "exampleuser2" |
 
   @webform
-  Scenario Outline: Webform - User can select country from drop down - No User
+  Scenario Outline: Webform - User can select <option> from drop down - No User
     Given I navigate to "/selenium/web/web-form.html" on product "SELENIUM"
     And I select <option> from the dropdown titled "Dropdown (datalist)"
     And I click button by text "Submit"
