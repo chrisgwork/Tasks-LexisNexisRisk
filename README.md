@@ -116,10 +116,10 @@ public void selectOptionFromDropDown(String option, String label) {
 
 ## Driver Details
 
-The `Driver` class is an abstract utility designed to simplify interactions with web elements using Selenium WebDriver. It provides methods for locating elements and performing actions like clicking, filling in text, or selecting checkboxes. One of the key features of this class is its fluent interface design, allowing you to chain method calls to perform multiple queries on an action before performing an action on it. See the below:
+The `Driver` class is an abstract utility designed to simplify interactions with web elements using Selenium WebDriver. It provides methods for locating elements and performing actions like clicking, filling in text, or selecting checkboxes. One of the key features of this class is its fluent interface design, allowing you to chain method calls to perform multiple queries on an action before performing an action on it. See the below for an example. I've used `Input` driver as the class, as the abstract class `Driver` cannot be instantiated:
 
 ```java
-new Driver(driver)
+new Input(driver)
   .byText("Login")
   .inClass("login-container")
   .byId("username")
