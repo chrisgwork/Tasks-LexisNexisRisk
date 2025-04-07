@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Cucumber Parallel Suite" parallel="tests" data-provider-thread-count="10">
+    <test name="FullRegression">
+        <classes>
+            <class name="com.runners.UIRegression"/>
+        </classes>
+    </test>
+</suite>
