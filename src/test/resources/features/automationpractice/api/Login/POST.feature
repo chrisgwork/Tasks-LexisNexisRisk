@@ -4,7 +4,7 @@ Feature: POST Login
   Background:
     * def random = Java.type('com.common.utils.core.data.helpers.MakeRandom');
 
-  Scenario: JIRA-1036 - POST /verifyLogin - 200
+  Scenario: POST /verifyLogin - 200
 
     # Define replacement variables for those in the postTemplate
     * def newValueEmail = random.email()

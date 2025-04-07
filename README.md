@@ -38,8 +38,7 @@ src/
    If you haven't already cloned the repository, do so using:
 
     ```bash
-    git clone <repository-url>
-    cd <project-directory>
+    git clone chrisgwork/Tasks-LexisNexisRisk
     ```
 
 2. **Perform a Maven clean build**:
