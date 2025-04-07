@@ -19,9 +19,9 @@ src/
 └── test/
     ├── java/
     │   └── com.common.utils.actions/
-    │       ├── drivers/            # Custom Selenium wrapper logic
     │       ├── definitions/        # Step definitions for Cucumber
-    │       └── utils/              # Helpers for filtering elements, indexes, etc.
+    │       └── drivers/            # Custom Selenium wrapper logic and driver classes
+    |           └──utils/           # Helpers for filtering elements, driver builders, indexes, etc.
     └── resources/
         └── features/
             └── selenium/
