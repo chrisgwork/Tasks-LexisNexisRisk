@@ -6,7 +6,7 @@ import com.common.utils.actions.drivers.utils.Helper;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class TextElement extends Driver {
+public class TextElement extends Driver<TextElement> {
 
     public TextElement(WebDriver driver) {
         super(driver);
