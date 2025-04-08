@@ -15,7 +15,7 @@ public interface Fillable<T extends Driver<T>> {
         driver.waitTillVisible();
         driver.getElement(index).sendKeys(text);
 
-        return (T) this;
+        return (T) driver;
     }
 
 }

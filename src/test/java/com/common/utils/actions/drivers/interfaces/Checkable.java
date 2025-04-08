@@ -20,7 +20,7 @@ public interface Checkable<T extends Driver<T>> {
             checkbox.click();
         }
 
-        return (T) this;
+        return (T) driver;
     }
 
     default T uncheck() {
@@ -29,7 +29,7 @@ public interface Checkable<T extends Driver<T>> {
 
     @SuppressWarnings("unchecked")
     default T uncheck(Integer index) {
-        if (!(this instanceof Driver driver)) { throw new IllegalStateException("Checkable must be a Driver"); }
+        if (!(this instanceof Driver<?> driver)) { throw new IllegalStateException("Checkable must be a Driver"); }
 
         driver.waitTillVisible();
         WebElement checkbox = driver.getElement(index);
@@ -37,6 +37,6 @@ public interface Checkable<T extends Driver<T>> {
             checkbox.click();
         }
 
-        return (T) this;
+        return (T) driver;
     }
 }

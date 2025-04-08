@@ -20,7 +20,7 @@ public interface Selectable<T extends Driver<T>> {
 
         input.click();
 
-        return (T) this;
+        return (T) driver;
     }
 
 }

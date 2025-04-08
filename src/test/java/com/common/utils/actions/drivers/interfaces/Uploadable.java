@@ -20,6 +20,6 @@ public interface Uploadable<T extends Driver<T>> {
         driver.waitTillVisible();
         driver.getElement(index).sendKeys(fileToUpload);
 
-        return (T) this;
+        return (T) driver;
     }
 }

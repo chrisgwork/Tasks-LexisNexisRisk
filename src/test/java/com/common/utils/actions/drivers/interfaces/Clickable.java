@@ -15,6 +15,6 @@ public interface Clickable<T extends Driver<T>> {
         driver.waitTillVisible();
         driver.getElement(index).click();
 
-        return (T) this;
+        return (T) driver;
     }
 }
