@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public abstract class Driver {
+public abstract class Driver<T extends Driver<T>> {
 
     protected WebDriver driver;
     private String currentSelector = "";
@@ -23,52 +23,56 @@ public abstract class Driver {
         this.driver = driver;
     }
 
-    public Driver byText(String text) {
+    protected T self() {
+        return (T) this;
+    }
+
+    public T byText(String text) {
         String xpath = "//*[contains(text(), '" + text + "')]";
         this.elements = ElementFilter.filterElementsByXPath(driver, this.elements, xpath);
-        return this;
+        return self();
     }
 
-    public Driver inClass(String containerClass) {
+    public T inClass(String containerClass) {
         String selector = "." + containerClass + " ";
         this.elements = ElementFilter.filterElements(driver, this.elements, selector);
-        return this;
+        return self();
     }
 
-    public Driver byLabel(String labelText) {
+    public T byLabel(String labelText) {
         String labelSelector = "//label[text() = 'Dropdown (datalist)']";
         this.elements = ElementFilter.filterElementsByXPath(driver, this.elements, labelSelector);
-        return this;
+        return self();
     }
 
-    public Driver byName(String name) {
+    public T byName(String name) {
         String selector = "[name='" + name + "']";
         this.currentSelector = selector;
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
 
         this.elements = ElementFilter.filterElements(driver, this.elements, selector);
-        return this;
+        return self();
     }
 
-    public Driver byDataTestId(String dataTestId) {
+    public T byDataTestId(String dataTestId) {
         String selector = "[data-test='" + dataTestId + "']";
         this.currentSelector = selector;
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
 
         this.elements = ElementFilter.filterElements(driver, this.elements, selector);
-        return this;
+        return self();
     }
 
-    public Driver byId(String id) {
+    public T byId(String id) {
         String selector = "[id='" + id + "']";
         this.currentSelector = selector;
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
 
         this.elements = ElementFilter.filterElements(driver, this.elements, selector);
-        return this;
+        return self();
     }
 
-    public Driver containingLabelAndDataTestId(String labelText, String dataTestId, boolean directChildOnly) {
+    public T containingLabelAndDataTestId(String labelText, String dataTestId, boolean directChildOnly) {
         List<WebElement> matchingElements = new ArrayList<>();
 
         String selector = directChildOnly
@@ -94,118 +98,24 @@ public abstract class Driver {
 
         // Set the filtered elements
         this.elements = matchingElements;
-        return this;
+        return self();
     }
 
     public abstract WebElement getElement(Integer index);
 
-    public Driver waitTillVisible() {
+    public T waitTillVisible() {
         if (!currentSelector.isEmpty()) {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(currentSelector)));
-            return this;
+            return self();
         }
 
-        return this;
+        return self();
     }
 
     public boolean isVisible() {
         return elements != null && !elements.isEmpty() && elements.get(0).isDisplayed();
-    }
-
-    public Driver select(String optionText, Integer index) {
-        waitTillVisible();
-        WebElement input = getElement(index);
-
-        input.sendKeys(optionText);
-
-        input.click();
-
-        return this;
-    }
-
-    public Driver select(String optionText) {
-
-        this.select(optionText, null);
-
-        return this;
-    }
-
-    public Driver check(Integer index) {
-        waitTillVisible();
-        WebElement checkbox = getElement(index);
-        if (!checkbox.isSelected()) {
-            checkbox.click();
-        }
-
-        return this;
-    }
-
-    public Driver check() {
-        this.check(null);
-
-        return this;
-    }
-
-    public Driver uncheck(Integer index) {
-        waitTillVisible();
-        WebElement checkbox = getElement(index);
-        if (checkbox.isSelected()) {
-            checkbox.click();
-        }
-
-        return this;
-    }
-
-    public Driver uncheck() {
-        this.uncheck(null);
-
-        return this;
-    }
-
-    public Driver click(Integer index) {
-        waitTillVisible();
-        getElement(index).click();
-
-        return this;
-    }
-
-    public Driver click() {
-        this.click(null);
-
-        return this;
-    }
-
-    public Driver fill(String text, Integer index) {
-        waitTillVisible();
-        getElement(index).sendKeys(text);
-
-        return this;
-    }
-
-    public Driver fill(String text) {
-        this.fill(text, null);
-
-        return this;
-    }
-
-    public Driver upload(String fileName, Integer index) {
-        ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(classLoader.getResource("data/uploadFiles/" + fileName).getFile());
-
-        String fileToUpload = file.getAbsolutePath();
-
-        waitTillVisible();
-        getElement(index).sendKeys(fileToUpload);
-
-        return this;
-    }
-
-    public Driver upload(String fileName) {
-        this.upload(fileName, null);
-
-        return this;
     }
 
 }
