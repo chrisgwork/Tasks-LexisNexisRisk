@@ -23,6 +23,7 @@ public abstract class Driver<T extends Driver<T>> {
         this.driver = driver;
     }
 
+    @SuppressWarnings("unchecked")
     protected T self() {
         return (T) this;
     }
