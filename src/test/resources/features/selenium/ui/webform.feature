@@ -1,7 +1,7 @@
 @UI @webform
 Feature: Webform functionality
 
-  @authentication
+  @input
   Scenario Outline: Webform - User can fill their username - User <username>
     Given I navigate to "/selenium/web/web-form.html" on product "SELENIUM"
     When I fill input by id "my-text-id" with text "<username>"
@@ -50,3 +50,17 @@ Feature: Webform functionality
       | file_type |
       | PNG.png   |
       | JPG.jpg   |
+
+  @checkbox
+  Scenario: Webform - User uncheck a checkbox - No User
+    Given I navigate to "/selenium/web/web-form.html" on product "SELENIUM"
+    And I uncheck the checkbox by id "my-check-2"
+    And I click button by text "Submit"
+    Then the class "lead" should contain text "Received!"
+    
+  @checkbox
+  Scenario: Webform - User check a checkbox - No User
+    Given I navigate to "/selenium/web/web-form.html" on product "SELENIUM"
+    And I check the checkbox by id "my-check-2"
+    And I click button by text "Submit"
+    Then the class "lead" should contain text "Received!"

@@ -15,7 +15,7 @@ public class FileSteps {
     }
 
     @When("I upload file into input by name {string} with file {fileType}")
-    public void fillInputByDataTestId(String name, String fileName) {
+    public void uploadFileByName(String name, String fileName) {
         new File(DriverManager.getDriver())
                 .byName(name)
                 .upload(fileName);

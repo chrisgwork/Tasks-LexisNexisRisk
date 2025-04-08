@@ -10,7 +10,7 @@ import io.cucumber.java.en.Then;
 public class ExpectSteps {
 
     @Then("the class {string} should contain text {string}")
-    public void fillInputByDataTestId(String className, String text) {
+    public void classContainsString(String className, String text) {
         new TextElement(DriverManager.getDriver())
                 .inClass(className)
                 .byText(text)

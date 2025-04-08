@@ -24,7 +24,7 @@ public interface Checkable<T extends Driver<T>> {
     }
 
     default T uncheck() {
-        return check(null);
+        return uncheck(null);
     }
 
     @SuppressWarnings("unchecked")
