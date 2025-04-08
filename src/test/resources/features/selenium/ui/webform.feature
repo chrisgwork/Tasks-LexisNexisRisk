@@ -1,7 +1,7 @@
-@UI
+@UI @webform
 Feature: Webform functionality
 
-  @webform
+  @authentication
   Scenario Outline: Webform - User can fill their username - User <username>
     Given I navigate to "/selenium/web/web-form.html" on product "SELENIUM"
     When I fill input by id "my-text-id" with text "<username>"
@@ -13,7 +13,7 @@ Feature: Webform functionality
       | exampleuser1 |
       | exampleuser2 |
 
-  @webform
+  @authentication
   Scenario Outline: Webform - User can fill their password - User <username>
     Given I navigate to "/selenium/web/web-form.html" on product "SELENIUM"
     And I fill input by name "my-password" for user <username>
@@ -25,7 +25,7 @@ Feature: Webform functionality
       | exampleuser1 |
       | exampleuser2 |
 
-  @webform
+  @dropdown
   Scenario Outline: Webform - User can select <option> from drop down - No User
     Given I navigate to "/selenium/web/web-form.html" on product "SELENIUM"
     And I select "<option>" from the dropdown titled "Dropdown (datalist)"
@@ -39,7 +39,7 @@ Feature: Webform functionality
       | Los Angeles   |
       | Chicago       |
 
-  @webform
+  @file
   Scenario Outline: Webform - User can upload file <file_type> - No User
     Given I navigate to "/selenium/web/web-form.html" on product "SELENIUM"
     And I upload file into input by name "my-file" with file <file_type>
