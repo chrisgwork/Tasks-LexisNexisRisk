@@ -54,7 +54,7 @@ Feature: Webform functionality
   @checkbox
   Scenario: Webform - User uncheck a checkbox - No User
     Given I navigate to "/selenium/web/web-form.html" on product "SELENIUM"
-    And I uncheck the checkbox by id "my-check-2"
+    And I uncheck the checkbox by id "my-check-1"
     And I click button by text "Submit"
     Then the class "lead" should contain text "Received!"
     
