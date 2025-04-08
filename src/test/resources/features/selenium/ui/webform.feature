@@ -52,15 +52,13 @@ Feature: Webform functionality
       | JPG.jpg   |
 
   @checkbox
-  Scenario: Webform - User uncheck a checkbox - No User
+  Scenario Outline: Webform - User <action> a checkbox - No User
     Given I navigate to "/selenium/web/web-form.html" on product "SELENIUM"
-    And I uncheck the checkbox by id "my-check-1"
+    And I <action> the checkbox by id "<id>"
     And I click button by text "Submit"
     Then the class "lead" should contain text "Received!"
-    
-  @checkbox
-  Scenario: Webform - User check a checkbox - No User
-    Given I navigate to "/selenium/web/web-form.html" on product "SELENIUM"
-    And I check the checkbox by id "my-check-2"
-    And I click button by text "Submit"
-    Then the class "lead" should contain text "Received!"
+
+    Examples:
+      | action  | id |
+      | check   | my-check-2 |
+      | uncheck | my-check-1 |

@@ -9,7 +9,7 @@ import static org.junit.Assert.assertTrue;
 
 public class DebugSteps {
 
-    @And("the thread sleeps for {int} seconds")
+    @And("I wait for {int} seconds")
     public void clickButtonByDataTestId(Integer sleep) throws InterruptedException {
         Thread.sleep(sleep * 1000);
     }

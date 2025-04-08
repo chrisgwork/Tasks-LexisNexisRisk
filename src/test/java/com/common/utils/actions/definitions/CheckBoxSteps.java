@@ -7,18 +7,22 @@ import io.cucumber.java.en.When;
 
 public class CheckBoxSteps {
 
-    @When("I check the checkbox by id {string}")
-    public void checkCheckBoxById(String id) {
-        new CheckBox(DriverManager.getDriver())
-                .byId(id)
-                .check();
+    @ParameterType("check|uncheck")
+    public String checkState(String type) {
+        return type;
     }
 
-    @When("I uncheck the checkbox by id {string}")
-    public void uncheckCheckBoxById(String id) {
-        new CheckBox(DriverManager.getDriver())
-                .byId(id)
-                .uncheck();
+    @When("I {checkState} the checkbox by id {string}")
+    public void actionCheckBoxById(String checkState, String id) {
+
+        CheckBox checkBox = new CheckBox(DriverManager.getDriver())
+                .byId(id);
+
+        if ("check".equals(checkState)) {
+            checkBox.check();
+            return;
+        }
+        checkBox.uncheck();
     }
 
 }
