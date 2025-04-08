@@ -52,7 +52,7 @@ Feature: Webform functionality
       | JPG.jpg   |
 
   @checkbox
-  Scenario Outline: Webform - User <action> a checkbox - No User
+  Scenario Outline: Webform - User can <action> a checkbox - No User
     Given I navigate to "/selenium/web/web-form.html" on product "SELENIUM"
     And I <action> the checkbox by id "<id>"
     And I click button by text "Submit"
