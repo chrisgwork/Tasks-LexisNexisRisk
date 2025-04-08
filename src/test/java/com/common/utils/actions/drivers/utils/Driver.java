@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
@@ -113,70 +114,98 @@ public abstract class Driver {
         return elements != null && !elements.isEmpty() && elements.get(0).isDisplayed();
     }
 
-    public void select(String optionText, Integer index) {
+    public Driver select(String optionText, Integer index) {
         waitTillVisible();
-        if (index == null) { index = 0; }
-
         WebElement input = getElement(index);
 
         input.sendKeys(optionText);
 
         input.click();
+
+        return this;
     }
 
-    public void select(String optionText) {
+    public Driver select(String optionText) {
+
         this.select(optionText, null);
+
+        return this;
     }
 
-    public void check(Integer index) {
+    public Driver check(Integer index) {
         waitTillVisible();
         WebElement checkbox = getElement(index);
         if (!checkbox.isSelected()) {
             checkbox.click();
         }
+
+        return this;
     }
 
-    public void check() {
-        waitTillVisible();
-        WebElement checkbox = getElement(0);
-        if (!checkbox.isSelected()) {
-            checkbox.click();
-        }
+    public Driver check() {
+        this.check(null);
+
+        return this;
     }
 
-    public void uncheck(Integer index) {
+    public Driver uncheck(Integer index) {
         waitTillVisible();
         WebElement checkbox = getElement(index);
         if (checkbox.isSelected()) {
             checkbox.click();
         }
+
+        return this;
     }
 
-    public void uncheck() {
-        waitTillVisible();
-        WebElement checkbox = getElement(0);
-        if (checkbox.isSelected()) {
-            checkbox.click();
-        }
+    public Driver uncheck() {
+        this.uncheck(null);
+
+        return this;
     }
 
-    public void click(Integer index) {
+    public Driver click(Integer index) {
         waitTillVisible();
         getElement(index).click();
+
+        return this;
     }
 
-    public void click() {
-        waitTillVisible();
-        getElement(0).click();
+    public Driver click() {
+        this.click(null);
+
+        return this;
     }
 
-    public void fill(String text, Integer index) {
+    public Driver fill(String text, Integer index) {
         waitTillVisible();
         getElement(index).sendKeys(text);
+
+        return this;
     }
 
-    public void fill(String text) {
-        waitTillVisible();
-        getElement(0).sendKeys(text);
+    public Driver fill(String text) {
+        this.fill(text, null);
+
+        return this;
     }
+
+    public Driver upload(String fileName, Integer index) {
+        ClassLoader classLoader = getClass().getClassLoader();
+        File file = new File(classLoader.getResource("data/uploadFiles/" + fileName).getFile());
+
+        String fileToUpload = file.getAbsolutePath();
+
+        waitTillVisible();
+        getElement(index).sendKeys(fileToUpload);
+
+        return this;
+    }
+
+    public Driver upload(String fileName) {
+        this.upload(fileName, null);
+
+        return this;
+    }
+
 }

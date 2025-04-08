@@ -4,10 +4,15 @@ import com.common.utils.actions.drivers.Input;
 import com.common.utils.actions.drivers.utils.DriverManager;
 import com.common.utils.core.authentication.CredentialManager;
 import com.common.utils.core.data.helpers.MakeRandom;
-import io.cucumber.java.en.And;
+import io.cucumber.java.ParameterType;
 import io.cucumber.java.en.When;
 
 public class InputSteps {
+
+    @ParameterType("exampleuser1|exampleuser2")
+    public String username(String type) {
+        return type;
+    }
 
     @When("I fill input by data test id {string} with text {string}")
     public void fillInputByDataTestId(String dataTestId, String text) {
@@ -37,21 +42,21 @@ public class InputSteps {
                 .fill(CredentialManager.getPassword(username));
     }
 
-    @When("I fill input by name {string} for user {string}")
+    @When("I fill input by name {string} for user {username}")
     public void fillInputByNamePassword(String name, String username) {
         new Input(DriverManager.getDriver())
                 .byName(name)
                 .fill(CredentialManager.getPassword(username));
     }
 
-    @And("I fill input by data test id {string} with a random word")
+    @When("I fill input by data test id {string} with a random word")
     public void iFillInputByDataTestIdWithARandomWord(String dataTestId) {
         new Input(DriverManager.getDriver())
                 .byDataTestId(dataTestId)
                 .fill(MakeRandom.word());
     }
 
-    @And("I fill input by data test id {string} with a random post code")
+    @When("I fill input by data test id {string} with a random post code")
     public void iFillInputByDataTestIdWithARandomPostCode(String dataTestId) {
         new Input(DriverManager.getDriver())
                 .byDataTestId(dataTestId)
