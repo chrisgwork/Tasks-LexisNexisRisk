@@ -59,6 +59,6 @@ Feature: Webform functionality
     Then the class "lead" should contain text "Received!"
 
     Examples:
-      | action  | id |
+      | action  | id         |
       | check   | my-check-2 |
       | uncheck | my-check-1 |
