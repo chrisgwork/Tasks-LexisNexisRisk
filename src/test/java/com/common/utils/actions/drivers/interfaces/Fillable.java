@@ -13,6 +13,7 @@ public interface Fillable<T extends Driver<T>> {
     default T fill(String text, Integer index) {
         if (!(this instanceof Driver<?> driver)) { throw new IllegalStateException("Fillable must be a Driver"); }
 
+        driver.waitTillVisible();
         WebElement input = driver.getElement(index);
         input.sendKeys(text);
         input.click();

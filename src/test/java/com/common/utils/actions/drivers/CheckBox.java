@@ -15,6 +15,4 @@ public class CheckBox extends Driver<CheckBox> implements Checkable<CheckBox>, U
         super(driver);
     }
 
-    @Override
-    public WebElement getElement(Integer index) { return Helper.getIndex(elements, index); }
 }

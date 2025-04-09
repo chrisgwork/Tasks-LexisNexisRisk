@@ -79,7 +79,9 @@ public abstract class Driver<T extends Driver<T>> {
         return self();
     }
 
-    public abstract WebElement getElement(Integer index);
+    public WebElement getElement(Integer index) {
+        return Helper.getIndex(elements, index);
+    }
 
     public T waitTillVisible() {
         if (currentSelector == null || currentSelector.isEmpty()) {

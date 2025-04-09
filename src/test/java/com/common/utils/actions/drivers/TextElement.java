@@ -12,9 +12,4 @@ public class TextElement extends Driver<TextElement> {
         super(driver);
     }
 
-    @Override
-    public WebElement getElement(Integer index) {
-        return Helper.getIndex(elements, index);
-    }
-
 }

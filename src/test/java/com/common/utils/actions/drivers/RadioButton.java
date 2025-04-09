@@ -13,6 +13,4 @@ public class RadioButton extends Driver<RadioButton> implements Checkable<RadioB
         super(driver);
     }
 
-    @Override
-    public WebElement getElement(Integer index) { return Helper.getIndex(elements, index); }
 }

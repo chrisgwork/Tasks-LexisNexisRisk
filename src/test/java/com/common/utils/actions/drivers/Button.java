@@ -13,10 +13,5 @@ public class Button extends Driver<Button> implements Clickable<Button> {
         super(driver);
     }
 
-    @Override
-    public WebElement getElement(Integer index) {
-        return Helper.getIndex(elements, index);
-    }
-
 }
 

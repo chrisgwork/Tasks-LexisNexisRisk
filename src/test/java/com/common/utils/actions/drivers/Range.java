@@ -12,7 +12,4 @@ public class Range extends Driver<Range> implements Slideable<Range> {
         super(driver);
     }
 
-    @Override
-    public WebElement getElement(Integer index) { return Helper.getIndex(elements, index); }
-
 }

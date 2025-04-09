@@ -11,7 +11,4 @@ public class DropDown extends Driver<DropDown> implements Selectable<DropDown> {
 
     public DropDown(WebDriver driver) { super(driver); }
 
-    @Override
-    public WebElement getElement(Integer index) { return Helper.getIndex(elements, index); }
-
 }

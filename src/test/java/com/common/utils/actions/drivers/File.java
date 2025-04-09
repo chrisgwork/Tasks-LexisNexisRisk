@@ -13,9 +13,4 @@ public class File extends Driver<File> implements Uploadable<File> {
         super(driver);
     }
 
-    @Override
-    public WebElement getElement(Integer index) {
-        return Helper.getIndex(elements, index);
-    }
-
 }

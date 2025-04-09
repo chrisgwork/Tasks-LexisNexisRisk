@@ -14,10 +14,5 @@ public class Input extends Driver<Input> implements Clickable<Input>, Fillable<I
         super(driver);
     }
 
-    @Override
-    public WebElement getElement(Integer index) {
-        return Helper.getIndex(elements, index);
-    }
-
 }
 
