@@ -4,7 +4,6 @@ import com.common.utils.actions.drivers.interfaces.Checkable;
 import com.common.utils.actions.drivers.interfaces.Toggleable;
 import com.common.utils.actions.drivers.interfaces.Uncheckable;
 import com.common.utils.actions.drivers.utils.Driver;
-
 import org.openqa.selenium.WebDriver;
 
 public class CheckBox extends Driver<CheckBox> implements Checkable<CheckBox>, Uncheckable<CheckBox>, Toggleable<CheckBox> {

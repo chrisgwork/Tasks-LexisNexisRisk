@@ -3,13 +3,13 @@ package com.common.utils.core.authentication;
 import com.common.utils.actions.drivers.Button;
 import com.common.utils.actions.drivers.Input;
 import com.common.utils.actions.drivers.Navigate;
-import com.common.utils.core.enums.Product;
 import com.common.utils.actions.drivers.utils.DriverManager;
+import com.common.utils.core.enums.Product;
 import org.openqa.selenium.Cookie;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.HashMap;
 
 public class SessionManager {
     private static final Map<String, Set<Cookie>> cachedSessions = new HashMap<>();

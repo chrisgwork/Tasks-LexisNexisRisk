@@ -1,6 +1,7 @@
 package com.common.utils.core.enums;
 
-import static com.common.utils.core.enums.Product.name.*;
+import static com.common.utils.core.enums.Product.name.AUTOMATION_PRACTICE;
+import static com.common.utils.core.enums.Product.name.SELENIUM;
 
 public class Product {
 

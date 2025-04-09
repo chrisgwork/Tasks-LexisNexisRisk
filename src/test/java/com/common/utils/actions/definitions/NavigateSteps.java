@@ -1,8 +1,8 @@
 package com.common.utils.actions.definitions;
 
 import com.common.utils.actions.drivers.Navigate;
-import com.common.utils.core.enums.Product;
 import com.common.utils.actions.drivers.utils.DriverManager;
+import com.common.utils.core.enums.Product;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import org.openqa.selenium.WebDriver;

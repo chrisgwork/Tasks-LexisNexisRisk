@@ -1,7 +1,6 @@
 package com.common.utils.actions.drivers.interfaces;
 
 import com.common.utils.actions.drivers.utils.Driver;
-import org.openqa.selenium.WebElement;
 
 public interface Toggleable<T extends Driver<T>> {
 

@@ -1,8 +1,6 @@
 package com.common.utils.core.data.helpers;
 
 import java.util.Random;
-import java.util.ArrayList;
-import java.util.List;
 
 public abstract class MakeRandom {
     private static final String VOWELS = "aeiou";
