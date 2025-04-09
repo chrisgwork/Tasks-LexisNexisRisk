@@ -52,9 +52,9 @@ public class SessionManager {
 
     private static void performLogin(String product, String username) {
         new Navigate(DriverManager.getDriver()).to(Product.name.valueOf(product.toUpperCase()));
-        new Input(DriverManager.getDriver()).byDataTestId("username").fill(username);
-        new Input(DriverManager.getDriver()).byDataTestId("password").fill(CredentialManager.getPassword(username));
-        new Button(DriverManager.getDriver()).byDataTestId("login-button").click();
+        new Input(DriverManager.getDriver()).by("dataTestId","username").fill(username);
+        new Input(DriverManager.getDriver()).by("dataTestId", "password").fill(CredentialManager.getPassword(username));
+        new Button(DriverManager.getDriver()).by("dataTestId", "login-button").click();
     }
 
     private static String generateKey(String product, String username) {
