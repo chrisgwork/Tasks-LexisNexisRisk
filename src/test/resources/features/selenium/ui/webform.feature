@@ -5,8 +5,7 @@ Feature: Webform functionality
   Scenario Outline: Webform - User can fill their username - User <username>
     Given I navigate to "/selenium/web/web-form.html" on product "SELENIUM"
     When I fill input by id "my-text-id" with text "<username>"
-    And I click button by text "Submit"
-    Then the class "lead" should contain text "Received!"
+    Then I take a screenshot
 
     Examples:
       | username     |
@@ -17,8 +16,7 @@ Feature: Webform functionality
   Scenario Outline: Webform - User can fill their password - User <username>
     Given I navigate to "/selenium/web/web-form.html" on product "SELENIUM"
     And I fill input by name "my-password" for user <username>
-    And I click button by text "Submit"
-    Then the class "lead" should contain text "Received!"
+    Then I take a screenshot
 
     Examples:
       | username     |
@@ -29,6 +27,7 @@ Feature: Webform functionality
   Scenario Outline: Webform - User can verify a <status> input - No User
     Given I navigate to "/selenium/web/web-form.html" on product "SELENIUM"
     Then the input with name "<name>" should be <status>
+    Then I take a screenshot
 
     Examples:
       | name        | status   |
@@ -39,15 +38,13 @@ Feature: Webform functionality
   Scenario: Webform - User can fill a text area - No User
     Given I navigate to "/selenium/web/web-form.html" on product "SELENIUM"
     And I fill input by name "my-textarea" with random word
-    And I click button by text "Submit"
-    Then the class "lead" should contain text "Received!"
+    Then I take a screenshot
 
   @dropDown @datalist
   Scenario Outline: Webform - User can select <option> from dropdown datalist - No User
     Given I navigate to "/selenium/web/web-form.html" on product "SELENIUM"
     And I fill input by text "Dropdown (datalist)" with text "<option>"
-    And I click button by text "Submit"
-    Then the class "lead" should contain text "Received!"
+    Then I take a screenshot
 
     Examples:
       | option        |
@@ -60,8 +57,7 @@ Feature: Webform functionality
   Scenario Outline: Webform - User can select <option> from dropdown select - No User
     Given I navigate to "/selenium/web/web-form.html" on product "SELENIUM"
     And I select dropdown box by text "Dropdown (select)" and select option "<option>"
-    And I click button by text "Submit"
-    Then the class "lead" should contain text "Received!"
+    Then I take a screenshot
 
     Examples:
       | option |
@@ -73,8 +69,7 @@ Feature: Webform functionality
   Scenario Outline: Webform - User can upload file <file_type> - No User
     Given I navigate to "/selenium/web/web-form.html" on product "SELENIUM"
     And I upload file into input by name "my-file" with file <file_type>
-    And I click button by text "Submit"
-    Then the class "lead" should contain text "Received!"
+    Then I take a screenshot
 
     Examples:
       | file_type |
@@ -85,8 +80,7 @@ Feature: Webform functionality
   Scenario Outline: Webform - User can <action> a checkbox - No User
     Given I navigate to "/selenium/web/web-form.html" on product "SELENIUM"
     And I <action> the checkbox by id "<id>"
-    And I click button by text "Submit"
-    Then the class "lead" should contain text "Received!"
+    Then I take a screenshot
 
     Examples:
       | action  | id         |
@@ -97,31 +91,34 @@ Feature: Webform functionality
   Scenario: Webform - User can check a radio button - No User
     Given I navigate to "/selenium/web/web-form.html" on product "SELENIUM"
     And I check the radio button by id "my-radio-2"
-    And I click button by text "Submit"
-    Then the class "lead" should contain text "Received!"
+    Then I take a screenshot
 
   @pickDate
   Scenario: Webform - User can pick a date from a calendar - No User
     Given I navigate to "/selenium/web/web-form.html" on product "SELENIUM"
     And I fill input by name "my-date" with text "04/02/2025"
-    And I click button by text "Submit"
-    Then the class "lead" should contain text "Received!"
+    Then I take a screenshot
 
   @pickColour
   Scenario: Webform - User can pick a colour from a colour picker - No User
     Given I navigate to "/selenium/web/web-form.html" on product "SELENIUM"
     And I fill input by name "my-colors" with text "#dbff33"
-    And I click button by text "Submit"
-    Then the class "lead" should contain text "Received!"
+    Then I take a screenshot
 
   @range
   Scenario Outline: Webform - User can slide range to value <value> - No User
     Given I navigate to "/selenium/web/web-form.html" on product "SELENIUM"
     And I set range input by name "my-range" to value "<value>"
-    And I click button by text "Submit"
-    Then the class "lead" should contain text "Received!"
+    Then I take a screenshot
 
     Examples:
       | value |
       | 0     |
       | 10    |
+
+  @submit
+  Scenario: Webform - User can submit form - No User
+    Given I navigate to "/selenium/web/web-form.html" on product "SELENIUM"
+    And I click button by text "Submit"
+    Then the class "lead" should contain text "Received!"
+    Then I take a screenshot
