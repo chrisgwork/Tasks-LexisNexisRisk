@@ -62,3 +62,10 @@ Feature: Webform functionality
       | action  | id         |
       | check   | my-check-2 |
       | uncheck | my-check-1 |
+
+  @radioButton
+  Scenario: Webform - User can check a radio button - No User
+    Given I navigate to "/selenium/web/web-form.html" on product "SELENIUM"
+    And I check the radio button by id "my-radio-2"
+    And I click button by text "Submit"
+    Then the class "lead" should contain text "Received!"
