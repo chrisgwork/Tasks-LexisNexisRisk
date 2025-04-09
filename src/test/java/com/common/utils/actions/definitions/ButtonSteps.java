@@ -5,7 +5,6 @@ import com.common.utils.actions.drivers.utils.DriverManager;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class ButtonSteps {

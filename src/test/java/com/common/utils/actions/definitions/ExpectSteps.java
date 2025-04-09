@@ -1,6 +1,5 @@
 package com.common.utils.actions.definitions;
 
-import com.common.utils.actions.drivers.CheckBox;
 import com.common.utils.actions.drivers.TextElement;
 import com.common.utils.actions.drivers.utils.DriverManager;
 import io.cucumber.java.en.Then;
