@@ -19,7 +19,7 @@ public abstract class Driver<T extends Driver<T>> {
 
     protected Map<String, String> currentSelector = new HashMap<>();
 
-    public enum SelectorType { CSS, XPATH }
+    public enum SelectorType {CSS, XPATH}
 
     private static class SelectorMeta {
         SelectorType type;
@@ -32,12 +32,12 @@ public abstract class Driver<T extends Driver<T>> {
     }
 
     private static final Map<String, SelectorMeta> selectorStrategies = Map.of(
-            "text",       new SelectorMeta(SelectorType.XPATH, val -> "//*[contains(text(), '" + val + "')]"),
-            "class",      new SelectorMeta(SelectorType.CSS,   val -> "." + val + " "),
-            "label",      new SelectorMeta(SelectorType.XPATH, val -> "//label[text() = '" + val + "']"),
-            "name",       new SelectorMeta(SelectorType.CSS,   val -> "[name='" + val + "']"),
-            "dataTestId", new SelectorMeta(SelectorType.CSS,   val -> "[data-test='" + val + "']"),
-            "id",         new SelectorMeta(SelectorType.CSS,   val -> "[id='" + val + "']")
+        "text",       new SelectorMeta(SelectorType.XPATH, val -> "//*[contains(text(), '" + val + "')]"),
+        "class",      new SelectorMeta(SelectorType.CSS,   val -> "." + val + " "),
+        "label",      new SelectorMeta(SelectorType.XPATH, val -> "//label[text() = '" + val + "']"),
+        "name",       new SelectorMeta(SelectorType.CSS,   val -> "[name='" + val + "']"),
+        "dataTestId", new SelectorMeta(SelectorType.CSS,   val -> "[data-test='" + val + "']"),
+        "id",         new SelectorMeta(SelectorType.CSS,   val -> "[id='" + val + "']")
     );
 
     protected List<WebElement> elements;
@@ -53,7 +53,9 @@ public abstract class Driver<T extends Driver<T>> {
 
     public T by(String type, String value) {
         SelectorMeta meta = selectorStrategies.get(type);
-        if (meta == null) { throw new IllegalArgumentException("Unsupported selector type: " + type); }
+        if (meta == null) {
+            throw new IllegalArgumentException("Unsupported selector type: " + type);
+        }
 
         String selector = meta.template.apply(value);
         currentSelector.put(meta.type.name(), selector);
@@ -67,7 +69,9 @@ public abstract class Driver<T extends Driver<T>> {
 
     public T with(String type, String value) {
         SelectorMeta meta = selectorStrategies.get(type);
-        if (meta == null) { throw new IllegalArgumentException("Unsupported selector type: " + type); }
+        if (meta == null) {
+            throw new IllegalArgumentException("Unsupported selector type: " + type);
+        }
 
         String selector = meta.template.apply(value);
         currentSelector.put(meta.type.name(), selector);
@@ -103,14 +107,6 @@ public abstract class Driver<T extends Driver<T>> {
         return self();
     }
 
-    public boolean isVisible() {
-        return elements != null && !elements.isEmpty() && elements.get(0).isDisplayed();
-    }
-
-    public boolean isNotVisible() {
-        return !isVisible();
-    }
-
     public JavascriptExecutor getJsExecutor() {
         if (!(driver instanceof JavascriptExecutor)) {
             throw new IllegalStateException("Driver does not support JavaScript execution");
@@ -118,19 +114,51 @@ public abstract class Driver<T extends Driver<T>> {
         return (JavascriptExecutor) driver;
     }
 
+    public boolean isVisible(Integer index) {
+        return (getElement(index)).isDisplayed();
+    }
+
+    public boolean isVisible() {
+        return isVisible(null);
+    }
+
+    public boolean isNotVisible(Integer index) {
+        return !isVisible(index);
+    }
+
+    public boolean isNotVisible() {
+        return isNotVisible(null);
+    }
+
+    public boolean isDisabled(Integer index) {
+        return (getElement(index)).getAttribute("disabled") != null;
+    }
+
     public boolean isDisabled() {
-        return elements != null && !elements.isEmpty() && elements.get(0).getAttribute("disabled") != null;
+        return isDisabled(null);
+    }
+
+    public boolean isNotDisabled(Integer index) {
+        return !isDisabled(index);
     }
 
     public boolean isNotDisabled() {
-        return !isDisabled();
+        return isNotDisabled(null);
+    }
+
+    public boolean isReadOnly(Integer index) {
+        return (getElement(index)).getAttribute("readonly") != null;
     }
 
     public boolean isReadOnly() {
-        return elements != null && !elements.isEmpty() && elements.get(0).getAttribute("readonly") != null;
+        return isReadOnly(null);
+    }
+
+    public boolean isNotReadOnly(Integer index) {
+        return !isReadOnly(index);
     }
 
     public boolean isNotReadOnly() {
-        return !isReadOnly();
+        return isNotReadOnly(null);
     }
 }
