@@ -11,12 +11,34 @@ import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 public abstract class Driver<T extends Driver<T>> {
 
     protected WebDriver driver;
 
     protected Map<String, String> currentSelector = new HashMap<>();
+
+    public enum SelectorType { CSS, XPATH }
+
+    private static class SelectorMeta {
+        SelectorType type;
+        Function<String, String> template;
+
+        SelectorMeta(SelectorType type, Function<String, String> template) {
+            this.type = type;
+            this.template = template;
+        }
+    }
+
+    private static final Map<String, SelectorMeta> selectorStrategies = Map.of(
+            "text",       new SelectorMeta(SelectorType.XPATH, val -> "//*[contains(text(), '" + val + "')]"),
+            "class",      new SelectorMeta(SelectorType.CSS,   val -> "." + val + " "),
+            "label",      new SelectorMeta(SelectorType.XPATH, val -> "//label[text() = '" + val + "']"),
+            "name",       new SelectorMeta(SelectorType.CSS,   val -> "[name='" + val + "']"),
+            "dataTestId", new SelectorMeta(SelectorType.CSS,   val -> "[data-test='" + val + "']"),
+            "id",         new SelectorMeta(SelectorType.CSS,   val -> "[id='" + val + "']")
+    );
 
     protected List<WebElement> elements;
 
@@ -29,51 +51,31 @@ public abstract class Driver<T extends Driver<T>> {
         return (T) this;
     }
 
-    public T byText(String text) {
-        String selector = "//*[contains(text(), '" + text + "')]";
-        currentSelector.put("XPATH", selector);
-        this.elements = ElementFilter.filterElementsByXPath(driver, this.elements, selector);
-        return self();
-    }
+    public T by(String type, String value) {
+        SelectorMeta meta = selectorStrategies.get(type);
+        if (meta == null) { throw new IllegalArgumentException("Unsupported selector type: " + type); }
 
-    public T byClass(String containerClass) {
-        String selector = "." + containerClass + " ";
-        currentSelector.put("CSS", selector);
-        this.elements = ElementFilter.filterElements(driver, this.elements, selector);
-        return self();
-    }
+        String selector = meta.template.apply(value);
+        currentSelector.put(meta.type.name(), selector);
 
-    public T byLabel(String labelText) {
-        String selector = "//label[text() = 'Dropdown (datalist)']";
-        currentSelector.put("XPATH", selector);
-        this.elements = ElementFilter.filterElementsByXPath(driver, this.elements, selector);
-        return self();
-    }
-
-    public T byName(String name) {
-        String selector = "[name='" + name + "']";
-        currentSelector.put("CSS", selector);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
 
-        this.elements = ElementFilter.filterElements(driver, this.elements, selector);
+        this.elements = Element.filterBy(meta.type, driver, this.elements, selector);
+
         return self();
     }
 
-    public T byDataTestId(String dataTestId) {
-        String selector = "[data-test='" + dataTestId + "']";
-        currentSelector.put("CSS", selector);
+    public T with(String type, String value) {
+        SelectorMeta meta = selectorStrategies.get(type);
+        if (meta == null) { throw new IllegalArgumentException("Unsupported selector type: " + type); }
+
+        String selector = meta.template.apply(value);
+        currentSelector.put(meta.type.name(), selector);
+
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
 
-        this.elements = ElementFilter.filterElements(driver, this.elements, selector);
-        return self();
-    }
+        this.elements = Element.withChild(meta.type, driver, this.elements, selector);
 
-    public T byId(String id) {
-        String selector = "[id='" + id + "']";
-        currentSelector.put("CSS", selector);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
-
-        this.elements = ElementFilter.filterElements(driver, this.elements, selector);
         return self();
     }
 
@@ -93,14 +95,9 @@ public abstract class Driver<T extends Driver<T>> {
         String selector = entry.getValue();
 
         switch (selectorType.toUpperCase()) {
-            case "XPATH":
-                wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(selector)));
-                break;
-            case "CSS":
-                wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(selector)));
-                break;
-            default:
-                throw new IllegalArgumentException("Unsupported selector type: " + selectorType);
+            case "XPATH" -> wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(selector)));
+            case "CSS" -> wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(selector)));
+            default -> throw new IllegalArgumentException("Unsupported selector type: " + selectorType);
         }
 
         return self();

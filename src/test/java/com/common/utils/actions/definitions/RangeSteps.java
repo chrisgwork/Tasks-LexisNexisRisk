@@ -6,10 +6,10 @@ import io.cucumber.java.en.When;
 
 public class RangeSteps {
 
-    @When("I set range input by name {string} to value {string}")
-    public void setRangeByName(String name, String value) {
+    @When("I set range input by {selectorType} {string} to value {string}")
+    public void setRangeByName(String selectorType, String name, String value) {
         new Range(DriverManager.getDriver())
-                .byName(name)
+                .by(selectorType, name)
                 .setRangeValue(value);
     }
 

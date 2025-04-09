@@ -10,35 +10,28 @@ import static org.junit.Assert.assertTrue;
 
 public class ButtonSteps {
 
-    @When("I click button by data test id {string}")
-    public void clickButtonByDataTestId(String dataTestId) {
+    @When("I click button by {selectorType} {string}")
+    public void clickButtonByDataTestId(String selectorType, String dataTestId) {
         new Button(DriverManager.getDriver())
-                .byDataTestId(dataTestId)
+                .by(selectorType, dataTestId)
                 .click();
     }
 
-    @When("I click button by text {string}")
-    public void clickButtonByText(String text) {
-        new Button(DriverManager.getDriver())
-                .byText(text)
-                .click();
-    }
-
-    @Then("the button with data test id {string} is visible")
-    public void theButtonDataTestIdIsVisible(String dataTestId) {
+    @Then("the button with {selectorType} {string} is visible")
+    public void theButtonSelectorTypeVisible(String selectorType, String selector) {
         boolean isVisible = new Button(DriverManager.getDriver())
-                .byDataTestId(dataTestId)
+                .by(selectorType, selector)
                 .isVisible();
 
-        assertTrue("The button with data test id " + dataTestId + " is not visible", isVisible);
+        assertTrue("The button with " + selectorType + " '" + selector + "' is not visible", isVisible);
     }
 
-    @Then("the button with data test id {string} is not visible")
-    public void theButtonDataTestIdIsNotVisible(String dataTestId) {
+    @Then("the button with {selectorType} {string} is not visible")
+    public void theButtonDataTestIdIsNotVisible(String selectorType, String selector) {
         boolean isVisible = new Button(DriverManager.getDriver())
-                .byDataTestId(dataTestId)
+                .by(selectorType, selector)
                 .isVisible();
 
-        assertFalse("The button with data test id " + dataTestId + " is visible", isVisible);
+        assertFalse("The button with " + selectorType + " '" + selector + "' is visible", isVisible);
     }
 }

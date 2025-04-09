@@ -6,11 +6,11 @@ import io.cucumber.java.en.When;
 
 public class DropDownSteps {
 
-    @When("I select dropdown box by text {string} and select option {string}")
-    public void selectOptionFromDropDown(String text, String option) {
+    @When("I select dropdown box by {selectorType} {string} and select option {string}")
+    public void selectOptionFromDropDown(String selectorType, String text, String option) {
         new DropDown(DriverManager.getDriver())
-                .byText(text)
-                .byClass("form-select")
+                .by(selectorType, text)
+                .by("class","form-select")
                 .select(option);
     }
 }
