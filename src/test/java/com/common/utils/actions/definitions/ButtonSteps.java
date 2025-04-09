@@ -27,7 +27,7 @@ public class ButtonSteps {
     @When("I click button in class {string} containing label {string} and data test id {string}")
     public void clickButtonInClassContainingLabelAndDataTestId(String className, String label, String dataTestId) {
         new Button(DriverManager.getDriver())
-                .inClass(className)
+                .byClass(className)
                 .containingLabelAndDataTestId(label, dataTestId, false)
                 .click();
     }
@@ -53,7 +53,7 @@ public class ButtonSteps {
     @Then("the button in class {string} containing label {string} and data test id {string} is visible")
     public void theButtonInClassContainingLabelAndDataTestIdIsVisible(String className, String label, String dataTestId) {
         boolean isVisible = new Button(DriverManager.getDriver())
-                .inClass(className)
+                .byClass(className)
                 .containingLabelAndDataTestId(label, dataTestId, false)
                 .isVisible();
 

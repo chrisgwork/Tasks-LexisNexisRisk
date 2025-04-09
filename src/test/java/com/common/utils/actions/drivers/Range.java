@@ -1,15 +1,16 @@
 package com.common.utils.actions.drivers;
 
-import com.common.utils.actions.drivers.interfaces.Selectable;
+import com.common.utils.actions.drivers.interfaces.Slideable;
 import com.common.utils.actions.drivers.utils.Driver;
 import com.common.utils.actions.drivers.utils.Helper;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class DropDown extends Driver<DropDown> implements Selectable<DropDown> {
+public class Range extends Driver<Range> implements Slideable<Range> {
 
-    public DropDown(WebDriver driver) { super(driver); }
+    public Range(WebDriver driver) {
+        super(driver);
+    }
 
     @Override
     public WebElement getElement(Integer index) { return Helper.getIndex(elements, index); }

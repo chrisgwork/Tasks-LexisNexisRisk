@@ -9,7 +9,7 @@ public class ExpectSteps {
     @Then("the class {string} should contain text {string}")
     public void classContainsString(String className, String text) {
         new TextElement(DriverManager.getDriver())
-                .inClass(className)
+                .byClass(className)
                 .byText(text)
                 .isVisible();
     }

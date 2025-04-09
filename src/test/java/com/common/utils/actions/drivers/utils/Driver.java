@@ -1,13 +1,12 @@
 package com.common.utils.actions.drivers.utils;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.io.File;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +33,7 @@ public abstract class Driver<T extends Driver<T>> {
         return self();
     }
 
-    public T inClass(String containerClass) {
+    public T byClass(String containerClass) {
         String selector = "." + containerClass + " ";
         this.elements = ElementFilter.filterElements(driver, this.elements, selector);
         return self();
@@ -82,7 +81,7 @@ public abstract class Driver<T extends Driver<T>> {
 
         List<WebElement> containersWithLabel = this.elements.stream()
                 .filter(container -> container.getText().contains(labelText))
-                .collect(Collectors.toList());
+                .toList();
 
         if (containersWithLabel.isEmpty()) {
             throw new RuntimeException("No container found with label '" + labelText + "'");
@@ -119,4 +118,8 @@ public abstract class Driver<T extends Driver<T>> {
         return elements != null && !elements.isEmpty() && elements.get(0).isDisplayed();
     }
 
+    public JavascriptExecutor getJsExecutor() {
+        if (!(driver instanceof JavascriptExecutor)) { throw new IllegalStateException("Driver does not support JavaScript execution"); }
+        return (JavascriptExecutor) driver;
+    }
 }

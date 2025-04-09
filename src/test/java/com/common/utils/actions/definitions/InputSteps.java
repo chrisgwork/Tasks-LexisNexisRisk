@@ -14,6 +14,11 @@ public class InputSteps {
         return type;
     }
 
+    @ParameterType("word|postcode")
+    public String randomValueType(String type) {
+        return type;
+    }
+
     @When("I fill input by data test id {string} with text {string}")
     public void fillInputByDataTestId(String dataTestId, String text) {
         new Input(DriverManager.getDriver())
@@ -25,6 +30,13 @@ public class InputSteps {
     public void fillInputId(String id, String text) {
         new Input(DriverManager.getDriver())
                 .byId(id)
+                .fill(text);
+    }
+
+    @When("I fill input by text {string} with text {string}")
+    public void fillInputText(String selector, String text) {
+        new Input(DriverManager.getDriver())
+                .byText(selector)
                 .fill(text);
     }
 
@@ -49,17 +61,27 @@ public class InputSteps {
                 .fill(CredentialManager.getPassword(username));
     }
 
-    @When("I fill input by data test id {string} with a random word")
-    public void iFillInputByDataTestIdWithARandomWord(String dataTestId) {
-        new Input(DriverManager.getDriver())
-                .byDataTestId(dataTestId)
-                .fill(MakeRandom.word());
+    public String randomValueMapper(String randomValue) {
+        return switch (randomValue) {
+            case "word" -> MakeRandom.word();
+            case "postcode" -> MakeRandom.postcode();
+            default -> throw new IllegalArgumentException(randomValue + "is not a recognised input");
+        };
     }
 
-    @When("I fill input by data test id {string} with a random post code")
-    public void iFillInputByDataTestIdWithARandomPostCode(String dataTestId) {
+    @When("I fill input by data test id {string} with random {randomValueType}")
+    public void fillInputByDataTestIdWithAValue(String selector, String randomValueType) {
+
         new Input(DriverManager.getDriver())
-                .byDataTestId(dataTestId)
-                .fill(MakeRandom.postcode());
+                .byDataTestId(selector)
+                .fill(randomValueMapper(randomValueType));
+    }
+
+    @When("I fill input by name {string} with random {randomValueType}")
+    public void fillInputByNameWithAValue(String selector, String randomValueType) {
+
+        new Input(DriverManager.getDriver())
+                .byName(selector)
+                .fill(randomValueMapper(randomValueType));
     }
 }
