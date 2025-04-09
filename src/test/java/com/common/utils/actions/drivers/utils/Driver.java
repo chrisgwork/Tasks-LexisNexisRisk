@@ -32,8 +32,8 @@ public abstract class Driver<T extends Driver<T>> {
     }
 
     private static final Map<String, SelectorMeta> selectorStrategies = Map.of(
-        "text",       new SelectorMeta(SelectorType.XPATH, val -> "//*[contains(text(), '" + val + "')]"),
-        "class",      new SelectorMeta(SelectorType.CSS,   val -> "." + val + " "),
+        "text",       new SelectorMeta(SelectorType.XPATH, val -> ".//*[normalize-space(text()) = '" + val + "']"),
+        "class",      new SelectorMeta(SelectorType.CSS,   val -> "." + val.trim().replace(" ", ".")),
         "label",      new SelectorMeta(SelectorType.XPATH, val -> "//label[text() = '" + val + "']"),
         "name",       new SelectorMeta(SelectorType.CSS,   val -> "[name='" + val + "']"),
         "dataTestId", new SelectorMeta(SelectorType.CSS,   val -> "[data-test='" + val + "']"),

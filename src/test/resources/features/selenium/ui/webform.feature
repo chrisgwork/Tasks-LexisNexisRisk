@@ -119,5 +119,5 @@ Feature: Webform functionality
   Scenario: Webform - User can submit form - No User
     Given I navigate to "/selenium/web/web-form.html" on product "SELENIUM"
     And I click button by text "Submit"
-    Then the class "lead" should equal text "Received!"
+    Then the class "col-12 py-2" should equal text "Received!"
     Then I take a screenshot
