@@ -9,13 +9,17 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public abstract class Driver<T extends Driver<T>> {
 
     protected WebDriver driver;
-    private String currentSelector = "";
+
+    protected Map<String, String> currentSelector = new HashMap<>();
+
     protected List<WebElement> elements;
 
     public Driver(WebDriver driver) {
@@ -28,26 +32,29 @@ public abstract class Driver<T extends Driver<T>> {
     }
 
     public T byText(String text) {
-        String xpath = "//*[contains(text(), '" + text + "')]";
-        this.elements = ElementFilter.filterElementsByXPath(driver, this.elements, xpath);
+        String selector = "//*[contains(text(), '" + text + "')]";
+        currentSelector.put("XPATH", selector);
+        this.elements = ElementFilter.filterElementsByXPath(driver, this.elements, selector);
         return self();
     }
 
     public T byClass(String containerClass) {
         String selector = "." + containerClass + " ";
+        currentSelector.put("CSS", selector);
         this.elements = ElementFilter.filterElements(driver, this.elements, selector);
         return self();
     }
 
     public T byLabel(String labelText) {
-        String labelSelector = "//label[text() = 'Dropdown (datalist)']";
-        this.elements = ElementFilter.filterElementsByXPath(driver, this.elements, labelSelector);
+        String selector = "//label[text() = 'Dropdown (datalist)']";
+        currentSelector.put("XPATH", selector);
+        this.elements = ElementFilter.filterElementsByXPath(driver, this.elements, selector);
         return self();
     }
 
     public T byName(String name) {
         String selector = "[name='" + name + "']";
-        this.currentSelector = selector;
+        currentSelector.put("CSS", selector);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
 
         this.elements = ElementFilter.filterElements(driver, this.elements, selector);
@@ -56,7 +63,7 @@ public abstract class Driver<T extends Driver<T>> {
 
     public T byDataTestId(String dataTestId) {
         String selector = "[data-test='" + dataTestId + "']";
-        this.currentSelector = selector;
+        currentSelector.put("CSS", selector);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
 
         this.elements = ElementFilter.filterElements(driver, this.elements, selector);
@@ -65,50 +72,35 @@ public abstract class Driver<T extends Driver<T>> {
 
     public T byId(String id) {
         String selector = "[id='" + id + "']";
-        this.currentSelector = selector;
+        currentSelector.put("CSS", selector);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
 
         this.elements = ElementFilter.filterElements(driver, this.elements, selector);
         return self();
     }
 
-    public T containingLabelAndDataTestId(String labelText, String dataTestId, boolean directChildOnly) {
-        List<WebElement> matchingElements = new ArrayList<>();
-
-        String selector = directChildOnly
-                ? ":scope > [data-test='" + dataTestId + "']"
-                : "[data-test='" + dataTestId + "']";
-
-        List<WebElement> containersWithLabel = this.elements.stream()
-                .filter(container -> container.getText().contains(labelText))
-                .toList();
-
-        if (containersWithLabel.isEmpty()) {
-            throw new RuntimeException("No container found with label '" + labelText + "'");
-        }
-
-        for (WebElement container : containersWithLabel) {
-            List<WebElement> matches = ElementFilter.filterElements(driver, List.of(container), selector);
-            matchingElements.addAll(matches);
-        }
-
-        if (matchingElements.isEmpty()) {
-            throw new RuntimeException("No element found with label '" + labelText + "' and data-test '" + dataTestId + "'");
-        }
-
-        // Set the filtered elements
-        this.elements = matchingElements;
-        return self();
-    }
-
     public abstract WebElement getElement(Integer index);
 
     public T waitTillVisible() {
-        if (!currentSelector.isEmpty()) {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        if (currentSelector == null || currentSelector.isEmpty()) {
+            throw new IllegalStateException("currentSelector is not defined.");
+        }
 
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(currentSelector)));
-            return self();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        Map.Entry<String, String> entry = currentSelector.entrySet().iterator().next();
+        String selectorType = entry.getKey();
+        String selector = entry.getValue();
+
+        switch (selectorType.toUpperCase()) {
+            case "XPATH":
+                wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(selector)));
+                break;
+            case "CSS":
+                wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(selector)));
+                break;
+            default:
+                throw new IllegalArgumentException("Unsupported selector type: " + selectorType);
         }
 
         return self();
@@ -119,7 +111,17 @@ public abstract class Driver<T extends Driver<T>> {
     }
 
     public JavascriptExecutor getJsExecutor() {
-        if (!(driver instanceof JavascriptExecutor)) { throw new IllegalStateException("Driver does not support JavaScript execution"); }
+        if (!(driver instanceof JavascriptExecutor)) {
+            throw new IllegalStateException("Driver does not support JavaScript execution");
+        }
         return (JavascriptExecutor) driver;
+    }
+
+    public boolean isDisabled() {
+        return elements != null && !elements.isEmpty() && elements.get(0).getAttribute("disabled") != null;
+    }
+
+    public boolean isReadOnly() {
+        return elements != null && !elements.isEmpty() && elements.get(0).getAttribute("readonly") != null;
     }
 }

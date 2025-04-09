@@ -25,6 +25,16 @@ Feature: Webform functionality
       | exampleuser1 |
       | exampleuser2 |
 
+  @input
+  Scenario Outline: Webform - User can verify a <status> input - No User
+    Given I navigate to "/selenium/web/web-form.html" on product "SELENIUM"
+    Then the input with name "<name>" should be <status>
+
+    Examples:
+      | name        | status   |
+      | my-disabled | disabled |
+      | my-readonly | readonly |
+
   @textarea
   Scenario: Webform - User can fill a text area - No User
     Given I navigate to "/selenium/web/web-form.html" on product "SELENIUM"

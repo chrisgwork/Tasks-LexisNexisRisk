@@ -7,6 +7,9 @@ import com.common.utils.core.data.helpers.MakeRandom;
 import io.cucumber.java.ParameterType;
 import io.cucumber.java.en.When;
 
+import static org.junit.Assert.assertTrue;
+
+
 public class InputSteps {
 
     @ParameterType("exampleuser1|exampleuser2")
@@ -18,6 +21,9 @@ public class InputSteps {
     public String randomValueType(String type) {
         return type;
     }
+
+    @ParameterType("disabled|readonly")
+    public String inputStatus(String type) { return type; }
 
     @When("I fill input by data test id {string} with text {string}")
     public void fillInputByDataTestId(String dataTestId, String text) {
@@ -83,5 +89,19 @@ public class InputSteps {
         new Input(DriverManager.getDriver())
                 .byName(selector)
                 .fill(randomValueMapper(randomValueType));
+    }
+
+    @When("the input with name {string} should be {inputStatus}")
+    public void inputStatus(String name, String inputStatus) {
+        Input element = new Input(DriverManager.getDriver())
+                .byName(name);
+
+        boolean statusValue = switch (inputStatus) {
+            case "disabled" -> element.isDisabled();
+            case "readonly" -> element.isReadOnly();
+            default -> throw new IllegalArgumentException("Unsupported input status: " + inputStatus);
+        };
+
+        assertTrue("The input with name " + name + " is " + inputStatus, statusValue);
     }
 }
