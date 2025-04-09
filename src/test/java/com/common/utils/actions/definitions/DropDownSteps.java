@@ -6,7 +6,7 @@ import io.cucumber.java.en.When;
 
 public class DropDownSteps {
 
-    @When("I select dropdown box by {selectorType} {string} and select option {string}")
+    @When("I fill dropdown box by {selectorType} {string} with option {string}")
     public void selectOptionFromDropDown(String selectorType, String text, String option) {
         new DropDown(DriverManager.getDriver())
                 .by(selectorType, text)

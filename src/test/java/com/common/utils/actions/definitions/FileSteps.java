@@ -6,8 +6,8 @@ import io.cucumber.java.en.When;
 
 public class FileSteps {
 
-    @When("I upload file into input by {selectorType} {string} with file {fileType}")
-    public void uploadFileByName(String selectorType, String name, String fileName) {
+    @When("I fill file upload by {selectorType} {string} with file {fileType}")
+    public void uploadFileBySelectorType(String selectorType, String name, String fileName) {
         new File(DriverManager.getDriver())
                 .by(selectorType, name)
                 .upload(fileName);

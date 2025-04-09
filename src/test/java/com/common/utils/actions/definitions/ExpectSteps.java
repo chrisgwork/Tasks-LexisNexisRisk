@@ -1,16 +1,26 @@
 package com.common.utils.actions.definitions;
 
+import com.common.utils.actions.drivers.CheckBox;
 import com.common.utils.actions.drivers.TextElement;
 import com.common.utils.actions.drivers.utils.DriverManager;
 import io.cucumber.java.en.Then;
 
+import static org.junit.Assert.assertTrue;
+
 public class ExpectSteps {
 
-    @Then("the {selectorType} {string} should contain {selectorType} {string}")
-    public void classContainsString(String selectorType1, String selector1, String selectorType2, String selector2) {
-        new TextElement(DriverManager.getDriver())
+    @Then("the {selectorType} {string} {shouldStatus} equal text {string}")
+    public void selectorTypeContainsString(String selectorType1, String selector1, String shouldStatus, String selector2) {
+        TextElement element = new TextElement(DriverManager.getDriver())
                 .by(selectorType1, selector1)
-                .by(selectorType2, selector2)
-                .isVisible();
+                .by("text", selector2);
+
+        boolean statusValue = switch (shouldStatus) {
+            case "should" -> element.isVisible();
+            case "should not" -> element.isNotVisible();
+            default -> throw new IllegalArgumentException("Unsupported status: " + shouldStatus);
+        };
+
+        assertTrue("The input with " + selectorType1 + " '" + selector1 + "' " + shouldStatus + " equal " + selector2, statusValue);
     }
 }

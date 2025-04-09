@@ -41,17 +41,17 @@ public class InputSteps {
                 .fill(randomValueMapper(randomValueType));
     }
 
-    @When("the input with {selectorType} {string} should be {inputStatus}")
-    public void inputStatus(String selectorType, String name, String inputStatus) {
+    @When("the input with {selectorType} {string} {shouldStatus} be {inputStatus}")
+    public void inputStatus(String selectorType, String selector, String shouldStatus, String inputStatus) {
         Input element = new Input(DriverManager.getDriver())
-                .by(selectorType, name);
+                .by(selectorType, selector);
 
         boolean statusValue = switch (inputStatus) {
-            case "disabled" -> element.isDisabled();
-            case "readonly" -> element.isReadOnly();
+            case "disabled" -> { yield "should".equals(shouldStatus) ? element.isDisabled() : element.isNotDisabled(); }
+            case "readonly" -> { yield "should".equals(shouldStatus) ? element.isReadOnly() : element.isNotReadOnly(); }
             default -> throw new IllegalArgumentException("Unsupported input status: " + inputStatus);
         };
 
-        assertTrue("The input with name " + name + " is " + inputStatus, statusValue);
+        assertTrue("The input with " + selectorType + " '" + selector + "' " + shouldStatus + " be " + inputStatus, statusValue);
     }
 }

@@ -107,6 +107,10 @@ public abstract class Driver<T extends Driver<T>> {
         return elements != null && !elements.isEmpty() && elements.get(0).isDisplayed();
     }
 
+    public boolean isNotVisible() {
+        return !isVisible();
+    }
+
     public JavascriptExecutor getJsExecutor() {
         if (!(driver instanceof JavascriptExecutor)) {
             throw new IllegalStateException("Driver does not support JavaScript execution");
@@ -118,7 +122,15 @@ public abstract class Driver<T extends Driver<T>> {
         return elements != null && !elements.isEmpty() && elements.get(0).getAttribute("disabled") != null;
     }
 
+    public boolean isNotDisabled() {
+        return !isDisabled();
+    }
+
     public boolean isReadOnly() {
         return elements != null && !elements.isEmpty() && elements.get(0).getAttribute("readonly") != null;
+    }
+
+    public boolean isNotReadOnly() {
+        return !isReadOnly();
     }
 }

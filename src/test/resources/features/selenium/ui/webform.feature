@@ -27,7 +27,6 @@ Feature: Webform functionality
   Scenario Outline: Webform - User can verify a <status> input - No User
     Given I navigate to "/selenium/web/web-form.html" on product "SELENIUM"
     Then the input with name "<name>" should be <status>
-    Then I take a screenshot
 
     Examples:
       | name        | status   |
@@ -56,7 +55,7 @@ Feature: Webform functionality
   @dropdown @select
   Scenario Outline: Webform - User can select <option> from dropdown select - No User
     Given I navigate to "/selenium/web/web-form.html" on product "SELENIUM"
-    And I select dropdown box by text "Dropdown (select)" and select option "<option>"
+    And I fill dropdown box by text "Dropdown (select)" with option "<option>"
     Then I take a screenshot
 
     Examples:
@@ -68,7 +67,7 @@ Feature: Webform functionality
   @file
   Scenario Outline: Webform - User can upload file <file_type> - No User
     Given I navigate to "/selenium/web/web-form.html" on product "SELENIUM"
-    And I upload file into input by name "my-file" with file <file_type>
+    And I fill file upload by name "my-file" with file <file_type>
     Then I take a screenshot
 
     Examples:
@@ -120,5 +119,5 @@ Feature: Webform functionality
   Scenario: Webform - User can submit form - No User
     Given I navigate to "/selenium/web/web-form.html" on product "SELENIUM"
     And I click button by text "Submit"
-    Then the class "lead" should contain text "Received!"
+    Then the class "lead" should equal text "Received!"
     Then I take a screenshot

@@ -6,13 +6,12 @@ import io.cucumber.java.en.When;
 
 public class CheckBoxSteps {
 
-    @When("I {checkState} the checkbox by {selectorType} {string}")
-    public void actionCheckBoxById(String checkState, String selectorType, String selector) {
-
+    @When("I {checkStatus} the checkbox by {selectorType} {string}")
+    public void actionCheckBoxBySelectorType(String checkStatus, String selectorType, String selector) {
         CheckBox checkBox = new CheckBox(DriverManager.getDriver())
                 .by(selectorType, selector);
 
-        if ("check".equals(checkState)) {
+        if ("check".equals(checkStatus)) {
             checkBox.check();
             return;
         }

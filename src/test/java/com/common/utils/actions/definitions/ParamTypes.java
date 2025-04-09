@@ -23,7 +23,7 @@ public class ParamTypes {
     }
 
     @ParameterType("check|uncheck")
-    public String checkState(String type) {
+    public String checkStatus(String type) {
         return type;
     }
 
@@ -32,5 +32,9 @@ public class ParamTypes {
         return type;
     }
 
+    @ParameterType("should|should not")
+    public String shouldStatus(String type) {
+        return type;
+    }
 
 }
