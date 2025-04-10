@@ -25,8 +25,8 @@ public class FullRegression {
                     "src/test/resources/features/saucedemo/ui",
             },
             glue = {
-                    "com.common.utils.actions.definitions",
-                    "com.common.hooks",
+                    "com.actions.definitions",
+                    "com.hooks",
             },
             plugin = {"pretty", "html:target/cucumber-report.htm"},
             tags = "@UI"
