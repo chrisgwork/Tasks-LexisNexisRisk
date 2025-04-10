@@ -56,22 +56,21 @@ src/
 
    Once the build is complete, you can run the tests using the instructions below:
 
+   Start by running:
+     ```bash
+     mvn -v
+     ```
+   
+   If mvn is not recognised, please follow the steps here to set it up: https://maven.apache.org/install.html
+
    - **Run all tests**:
 
-     From the root of the project, use:
+     Once you've verified `mvn` is set up, from the root of the project, use:
 
      ```bash
      mvn clean test
      ```
-
-   - **Run a specific feature**:
-
-     To run a specific feature, use:
-
-     ```bash
-     mvn test -Dcucumber.options="src/test/resources/features/webform.feature"
-     ```
-
+     
 ---
 
 ### Test Runners

@@ -30,7 +30,7 @@
     <dependency>
       <groupId>com.intuit.karate</groupId>
       <artifactId>karate-junit5</artifactId>
-      <version>1.4.1</version> <!-- Or latest -->
+      <version>1.4.1</version>
       <scope>test</scope>
     </dependency>
 
@@ -60,17 +60,20 @@
       <artifactId>dotenv-java</artifactId>
       <version>3.2.0</version>
     </dependency>
+
     <dependency>
       <groupId>io.cucumber</groupId>
       <artifactId>cucumber-java</artifactId>
       <version>7.14.0</version>
     </dependency>
+
     <dependency>
       <groupId>io.cucumber</groupId>
       <artifactId>cucumber-junit</artifactId>
       <version>7.14.0</version>
       <scope>test</scope>
     </dependency>
+
   </dependencies>
   <build>
     <plugins>
