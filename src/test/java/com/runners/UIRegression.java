@@ -9,8 +9,8 @@ import org.testng.annotations.DataProvider;
                 "src/test/resources/features",
         },
         glue = {
-                "com.common.utils.actions.definitions",
-                "com.common.hooks",
+                "com.actions.definitions",
+                "com.hooks",
         },
         plugin = {"pretty", "html:target/cucumber-report.htm"},
         tags = ("@UI")

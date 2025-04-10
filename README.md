@@ -18,7 +18,7 @@ This is a test automation framework built using **Selenium**, **Java 18**, and *
 src/
 └── test/
     ├── java/
-    │   └── com.common.utils.actions/
+    │   └── com.actions/
     │       ├── definitions/        # Step definitions for Cucumber
     │       └── drivers/            # Custom Selenium wrapper logic and driver classes
     |           └──utils/           # Helpers for filtering elements, driver builders, indexes, etc.
@@ -127,11 +127,12 @@ new Input(driver)
 
 ### Implementing Custom Drivers
 It's then easier to create the driver instance classes by extending the Driver class. This allows you to define specific behaviors for different types of elements, such as form inputs, buttons, or dropdowns. Each subclass must implement the getElement(Integer index) method to retrieve the correct element based on the filtered list. For example:
-```java
-package com.common.utils.actions.drivers;
 
-import com.common.utils.actions.drivers.utils.Driver;
-import com.common.utils.actions.drivers.utils.Helper;
+```java
+package com.actions.drivers;
+
+import com.actions.drivers.utils.Driver;
+import com.actions.drivers.utils.Helper;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
