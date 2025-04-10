@@ -27,27 +27,50 @@ public class Element {
                 .collect(Collectors.toList());
     }
 
-    public static List<WebElement> withChild(SelectorType type, WebDriver driver, List<WebElement> existingElements, String selector) {
+    public static List<WebElement> withChild(
+            SelectorType type,
+            WebDriver driver,
+            List<WebElement> existingElements,
+            String selector,
+            Integer elementMatchingLimit
+    ) {
+        int limit = (elementMatchingLimit == null) ? 1 : elementMatchingLimit;
+
+        if (limit < 0) {
+            throw new IllegalArgumentException("Element matching limit: " + limit + " must be >= 0");
+        }
+
         if (existingElements == null || existingElements.isEmpty()) {
-            return switch (type) {
-                case CSS -> driver.findElements(By.cssSelector(selector));
-                case XPATH -> driver.findElements(By.xpath(selector));
-            };
+            throw new RuntimeException("There are no elements provided, `.with` requires base elements to filter on. Please use `.by` first.");
         }
 
         List<WebElement> filtered = new ArrayList<>();
+        By by = switch (type) {
+            case CSS -> By.cssSelector(selector);
+            case XPATH -> By.xpath(selector);
+        };
+
+        int matchCount = 0;
 
         for (WebElement element : existingElements) {
-            List<WebElement> children = switch (type) {
-                case CSS -> element.findElements(By.cssSelector(selector));
-                case XPATH -> element.findElements(By.xpath(selector));
-            };
+            if (limit > 0 && matchCount >= limit) break;
 
+            List<WebElement> children = element.findElements(by);
             if (!children.isEmpty()) {
                 filtered.add(element);
+                matchCount++;
             }
         }
 
         return filtered;
+    }
+
+    public static List<WebElement> withChild(
+            SelectorType type,
+            WebDriver driver,
+            List<WebElement> existingElements,
+            String selector
+    ) {
+        return withChild(type, driver, existingElements, selector, null);
     }
 }

@@ -67,7 +67,7 @@ public abstract class Driver<T extends Driver<T>> {
         return self();
     }
 
-    public T with(String type, String value) {
+    public T with(String type, String value, Integer matchingElementLimit) {
         SelectorMeta meta = selectorStrategies.get(type);
         if (meta == null) {
             throw new IllegalArgumentException("Unsupported selector type: " + type);
@@ -78,9 +78,13 @@ public abstract class Driver<T extends Driver<T>> {
 
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
 
-        this.elements = Element.withChild(meta.type, driver, this.elements, selector);
+        this.elements = Element.withChild(meta.type, driver, this.elements, selector, matchingElementLimit);
 
         return self();
+    }
+
+    public T with(String type, String value) {
+        return with(type, value, null);
     }
 
     public WebElement getElement(Integer index) {
