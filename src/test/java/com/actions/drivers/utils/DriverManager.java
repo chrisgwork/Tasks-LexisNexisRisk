@@ -10,23 +10,32 @@ public class DriverManager {
     private static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
     public static void setDriver() {
+        if (driver.get() != null) {
+            throw new IllegalStateException("Driver is already set for this thread.");
+        }
+
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless=new");
         options.addArguments("--disable-gpu");
         options.addArguments("--window-size=1920,1080");
 
-        WebDriver webDriver = new ChromeDriver(options);
-        driver.set(ThreadGuard.protect((webDriver)));
+        WebDriver rawDriver = new ChromeDriver(options);
+        WebDriver protectedDriver = ThreadGuard.protect(rawDriver);
+        driver.set(protectedDriver);
     }
 
     public static WebDriver getDriver() {
-        return driver.get();
+        WebDriver current = driver.get();
+        if (current == null) {
+            throw new IllegalStateException("No WebDriver instance found for this thread. Did you forget to call setDriver()?");
+        }
+        return current;
     }
 
     public static void quitDriver() {
-        WebDriver webDriver = driver.get();
-        if (webDriver != null) {
-            webDriver.quit();
+        WebDriver current = driver.get();
+        if (current != null) {
+            current.quit();
             driver.remove();
         }
     }

@@ -27,4 +27,5 @@ public class DebugSteps {
                 .getScreenshotAs(OutputType.BYTES);
         scenario.attach(screenshot, "image/png", "Debug Screenshot");
     }
+
 }

@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public abstract class Driver<T extends Driver<T>> {
 
@@ -32,11 +33,11 @@ public abstract class Driver<T extends Driver<T>> {
     }
 
     private static final Map<String, SelectorMeta> selectorStrategies = Map.of(
-        "text",       new SelectorMeta(SelectorType.XPATH, val -> ".//*[normalize-space(text()) = '" + val + "']"),
+        "text",       new SelectorMeta(SelectorType.XPATH, val -> ".//*[contains(normalize-space(.), '" + val + "')]"),
         "class",      new SelectorMeta(SelectorType.CSS,   val -> "." + val.trim().replace(" ", ".")),
         "label",      new SelectorMeta(SelectorType.XPATH, val -> ".//label[text() = '" + val + "']"),
         "name",       new SelectorMeta(SelectorType.CSS,   val -> "[name='" + val + "']"),
-        "dataTestId", new SelectorMeta(SelectorType.CSS,   val -> "[data-test='" + val + "']"),
+        "dataTest",   new SelectorMeta(SelectorType.CSS,   val -> "[data-test='" + val + "']"),
         "id",         new SelectorMeta(SelectorType.CSS,   val -> "[id='" + val + "']")
     );
 
@@ -87,6 +88,18 @@ public abstract class Driver<T extends Driver<T>> {
         return with(type, value, null);
     }
 
+    public T is(String tagName) {
+        if (elements == null || elements.isEmpty()) {
+            throw new IllegalStateException("No elements available to filter by tag name.");
+        }
+
+        this.elements = elements.stream()
+                .filter(e -> e.getTagName().equalsIgnoreCase(tagName))
+                .collect(Collectors.toList());
+
+        return self();
+    }
+
     public WebElement getElement(Integer index) {
         return Helper.getIndex(elements, index);
     }
@@ -105,6 +118,27 @@ public abstract class Driver<T extends Driver<T>> {
         switch (selectorType.toUpperCase()) {
             case "XPATH" -> wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(selector)));
             case "CSS" -> wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(selector)));
+            default -> throw new IllegalArgumentException("Unsupported selector type: " + selectorType);
+        }
+
+        return self();
+    }
+
+    public T waitTillEnabled() {
+
+        if (currentSelector == null || currentSelector.isEmpty()) {
+            throw new IllegalStateException("currentSelector is not defined.");
+        }
+
+        Map.Entry<String, String> entry = currentSelector.entrySet().iterator().next();
+        String selectorType = entry.getKey();
+        String selector = entry.getValue();
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        switch (selectorType.toUpperCase()) {
+            case "XPATH" -> wait.until(ExpectedConditions.elementToBeClickable(By.xpath(selector)));
+            case "CSS" -> wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(selector)));
             default -> throw new IllegalArgumentException("Unsupported selector type: " + selectorType);
         }
 

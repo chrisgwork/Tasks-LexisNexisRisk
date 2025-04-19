@@ -14,6 +14,7 @@ public interface Checkable<T extends Driver<T>> {
         if (!(this instanceof Driver<?> driver)) { throw new IllegalStateException("Checkable must be a Driver"); }
 
         driver.waitTillVisible();
+        driver.waitTillEnabled();
         WebElement element = driver.getElement(index);
         if (!element.isSelected()) {
             element.click();

@@ -1,12 +1,14 @@
 package com.actions.definitions;
 
 import com.core.authentication.SessionManager;
+import com.core.enums.Product;
+import com.core.enums.UserType;
 import io.cucumber.java.en.Given;
 
 public class AuthenticationSteps {
 
-    @Given("I authenticate as user {string} on product {string}")
-    public void authenticateAsUser(String username, String product) {
+    @Given("I authenticate as user {username} on product {product}")
+    public void authenticateAsUser(String username, Product.name product) {
         SessionManager.set(product, username);
     }
 }

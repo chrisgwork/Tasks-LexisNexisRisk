@@ -1,5 +1,5 @@
 package com.core.enums;
 
-public enum TestType {
+public enum Test {
     UI, API
 }

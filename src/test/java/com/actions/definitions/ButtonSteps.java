@@ -13,6 +13,7 @@ public class ButtonSteps {
     public void clickButtonByDataTestSelectorType(String selectorType, String dataTestId) {
         new Button(DriverManager.getDriver())
                 .by(selectorType, dataTestId)
+                .is("button")
                 .click();
     }
 
@@ -29,5 +30,4 @@ public class ButtonSteps {
 
         assertTrue("The button with " + selectorType + " '" + selector + "' " + shouldStatus + " visible", statusValue);
     }
-
 }

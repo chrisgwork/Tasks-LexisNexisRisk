@@ -14,6 +14,7 @@ public interface Slideable <T extends Driver<T>> {
         if (!(this instanceof Driver<?> driver)) { throw new IllegalStateException("RangeSettable must be a Driver"); }
 
         driver.waitTillVisible();
+        driver.waitTillEnabled();
         WebElement slider = driver.getElement(index);
 
         driver.getJsExecutor().executeScript(

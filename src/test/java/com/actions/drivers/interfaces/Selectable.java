@@ -15,6 +15,7 @@ public interface Selectable<T extends Driver<T>> {
         if (!(this instanceof Driver<?> driver)) { throw new IllegalStateException("Selectable must be a Driver"); }
 
         driver.waitTillVisible();
+        driver.waitTillEnabled();
         WebElement dropdown = driver.getElement(index);
         Select select = new Select(dropdown);
         select.selectByVisibleText(visibleText);

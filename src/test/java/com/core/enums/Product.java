@@ -1,36 +1,21 @@
 package com.core.enums;
 
-import static com.core.enums.Product.name.AUTOMATION_PRACTICE;
-import static com.core.enums.Product.name.SELENIUM;
+import static com.core.enums.Product.name.*;
 
 public class Product {
 
     public enum name {
-        SELENIUM("selenium"),
-        AUTOMATION_PRACTICE("automationPractice");
-
-        private final String name;
-
-        name(String name) {
-            this.name = name;
-        }
-
-        public String getName() {
-            return name;
-        }
+        orangehrm, selenium, automationPractice
     }
 
-    public static String getURL(name product, TestType area) {
+    public static String getURL(name product, Test area) {
         String path;
 
-        BaseUrl.UI.getUrl(SELENIUM);
-        switch (product) {
-            case SELENIUM:
-                return path = (area == TestType.UI) ? BaseUrl.UI.getUrl(SELENIUM) : BaseUrl.API.getUrl(SELENIUM);
-            case AUTOMATION_PRACTICE:
-                return  path = (area == TestType.UI) ? BaseUrl.UI.getUrl(AUTOMATION_PRACTICE) : BaseUrl.API.getUrl(AUTOMATION_PRACTICE);
-            default:
-                throw new IllegalArgumentException("Unknown product: " + product);
-        }
+        return switch (product) {
+            case orangehrm -> path = (area == Test.UI) ? BaseUrl.UI.getUrl(orangehrm) : BaseUrl.API.getUrl(orangehrm);
+            case selenium -> path = (area == Test.UI) ? BaseUrl.UI.getUrl(selenium) : BaseUrl.API.getUrl(selenium);
+            case automationPractice -> path = (area == Test.UI) ? BaseUrl.UI.getUrl(automationPractice) : BaseUrl.API.getUrl(automationPractice);
+            default -> throw new IllegalArgumentException("Unknown product: " + product);
+        };
     }
 }

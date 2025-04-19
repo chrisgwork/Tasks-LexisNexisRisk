@@ -14,6 +14,7 @@ public interface Fillable<T extends Driver<T>> {
         if (!(this instanceof Driver<?> driver)) { throw new IllegalStateException("Fillable must be a Driver"); }
 
         driver.waitTillVisible();
+        driver.waitTillEnabled();
         WebElement input = driver.getElement(index);
         input.sendKeys(text);
         input.click();

@@ -13,8 +13,16 @@ public interface Clickable<T extends Driver<T>> {
         if (!(this instanceof Driver driver)) { throw new IllegalStateException("Clickable must be a Driver"); }
 
         driver.waitTillVisible();
+        driver.waitTillEnabled();
         driver.getElement(index).click();
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
         return (T) driver;
     }
+
 }

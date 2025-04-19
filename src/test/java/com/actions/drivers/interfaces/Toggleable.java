@@ -13,6 +13,7 @@ public interface Toggleable<T extends Driver<T>> {
         if (!(this instanceof Driver<?> driver)) { throw new IllegalStateException("Toggleable must be a Driver"); }
 
         driver.waitTillVisible();
+        driver.waitTillEnabled();
         driver.getElement(index).click();
         return (T) driver;
     }

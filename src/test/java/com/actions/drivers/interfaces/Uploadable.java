@@ -18,6 +18,7 @@ public interface Uploadable<T extends Driver<T>> {
         }
 
         driver.waitTillVisible();
+        driver.waitTillEnabled();
         driver.getElement(index).sendKeys(fileToUpload);
 
         return (T) driver;
