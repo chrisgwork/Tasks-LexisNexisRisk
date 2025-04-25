@@ -11,7 +11,7 @@ public class ButtonSteps {
 
     @When("I click button by {selectorType} {string}")
     public void clickButtonByDataTestSelectorType(String selectorType, String dataTestId) {
-        new Button(DriverManager.getDriver())
+        new Button(DriverManager.get())
                 .by(selectorType, dataTestId)
                 .is("button")
                 .click();
@@ -19,7 +19,7 @@ public class ButtonSteps {
 
     @Then("the button with {selectorType} {string} {shouldStatus} be visible")
     public void theButtonSelectorTypeVisible(String selectorType, String selector, String shouldStatus) {
-        Button element = new Button(DriverManager.getDriver())
+        Button element = new Button(DriverManager.get())
                 .by(selectorType, selector);
 
         boolean statusValue = switch (shouldStatus) {

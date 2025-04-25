@@ -1,9 +1,10 @@
 package com.core.enums;
 
-import com.core.enums.orangehrm.UserOrangehrm;
+import com.core.enums.herokuapp.UserHerokuapp;
 import com.core.enums.selenium.UserSelenium;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -11,7 +12,7 @@ public class UserRegistry {
 
     private static final List<UserType> ALL_USERS = Stream.of(
                     UserSelenium.values(),
-                    UserOrangehrm.values()
+                    UserHerokuapp.values()
             ).flatMap(Arrays::stream)
             .collect(Collectors.toList());
 

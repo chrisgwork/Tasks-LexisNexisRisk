@@ -21,7 +21,7 @@ public class Navigate {
         String url = Product.getURL(product, Test.UI);
         driver.get(url + path);
 
-        new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(10)).until(
+        new WebDriverWait(DriverManager.get(), Duration.ofSeconds(10)).until(
                 webDriver -> ((JavascriptExecutor) webDriver)
                         .executeScript("return document.readyState").equals("complete")
         );
@@ -31,7 +31,7 @@ public class Navigate {
         String url = Product.getURL(product, Test.UI);
         driver.get(url);
 
-        new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(10)).until(
+        new WebDriverWait(DriverManager.get(), Duration.ofSeconds(10)).until(
                 webDriver -> ((JavascriptExecutor) webDriver)
                         .executeScript("return document.readyState").equals("complete")
         );

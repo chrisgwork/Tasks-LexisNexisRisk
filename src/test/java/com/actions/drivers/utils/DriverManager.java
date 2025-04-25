@@ -9,7 +9,7 @@ public class DriverManager {
 
     private static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
-    public static void setDriver() {
+    public static void set() {
         if (driver.get() != null) {
             throw new IllegalStateException("Driver is already set for this thread.");
         }
@@ -24,7 +24,7 @@ public class DriverManager {
         driver.set(protectedDriver);
     }
 
-    public static WebDriver getDriver() {
+    public static WebDriver get() {
         WebDriver current = driver.get();
         if (current == null) {
             throw new IllegalStateException("No WebDriver instance found for this thread. Did you forget to call setDriver()?");
@@ -32,7 +32,7 @@ public class DriverManager {
         return current;
     }
 
-    public static void quitDriver() {
+    public static void quit() {
         WebDriver current = driver.get();
         if (current != null) {
             current.quit();

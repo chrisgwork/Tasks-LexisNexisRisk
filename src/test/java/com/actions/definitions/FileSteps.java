@@ -8,7 +8,7 @@ public class FileSteps {
 
     @When("I fill file upload by {selectorType} {string} with file {fileType}")
     public void uploadFileBySelectorType(String selectorType, String name, String fileName) {
-        new File(DriverManager.getDriver())
+        new File(DriverManager.get())
                 .by(selectorType, name)
                 .upload(fileName);
     }

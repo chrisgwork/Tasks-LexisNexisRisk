@@ -8,7 +8,7 @@ public class RadioButtonSteps {
 
     @When("I check the radio button by {selectorType} {string}")
     public void checkRadioButtonById(String selectorType, String selector) {
-        new RadioButton(DriverManager.getDriver())
+        new RadioButton(DriverManager.get())
                 .by(selectorType, selector)
                 .check();
     }

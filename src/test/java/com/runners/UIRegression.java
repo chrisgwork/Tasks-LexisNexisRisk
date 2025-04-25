@@ -13,7 +13,7 @@ import org.testng.annotations.DataProvider;
                 "com.hooks",
         },
         plugin = {"pretty", "html:target/cucumber-report.htm"},
-        tags = ("@UI")
+        tags = ("@ui")
 )
 public class UIRegression extends AbstractTestNGCucumberTests {
 

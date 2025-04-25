@@ -29,7 +29,7 @@ public class FullRegression {
                     "com.hooks",
             },
             plugin = {"pretty", "html:target/cucumber-report.htm"},
-            tags = "@UI"
+            tags = "@ui"
     )
     public static class UIRegression extends AbstractTestNGCucumberTests {
 

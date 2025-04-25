@@ -12,8 +12,8 @@ public enum BaseUrl {
         switch (this) {
             case UI -> {
                 return switch (product) {
-                    case orangehrm -> "https://opensource-demo.orangehrmlive.com";
-                    case selenium -> "https://www.selenium.dev";
+                    case herokuapp -> "https://the-internet.herokuapp.com";
+                    case selenium -> "https://www.selenium.dev/selenium/web";
                     default -> throw new IllegalArgumentException("Unknown Product for UI: " + product);
                 };
             }

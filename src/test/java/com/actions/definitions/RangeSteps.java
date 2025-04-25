@@ -8,7 +8,7 @@ public class RangeSteps {
 
     @When("I set range input by {selectorType} {string} to value {string}")
     public void setRangeByName(String selectorType, String name, String value) {
-        new Range(DriverManager.getDriver())
+        new Range(DriverManager.get())
                 .by(selectorType, name)
                 .setRangeValue(value);
     }

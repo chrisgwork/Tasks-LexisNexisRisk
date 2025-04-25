@@ -2,19 +2,16 @@ package com.actions.definitions;
 
 import com.core.enums.Product;
 import com.core.enums.UserRegistry;
-import com.core.enums.UserType;
 import io.cucumber.java.ParameterType;
-
-import java.util.Arrays;
 
 public class ParamTypes {
 
-    @ParameterType("exampleuser1|exampleuser2|Admin")
+    @ParameterType("exampleuser1|exampleuser2|tomsmith")
     public String username(String type) {
         return UserRegistry.getUserByName(type).getUsername();
     }
 
-    @ParameterType("orangehrm|selenium|automationPractice")
+    @ParameterType("herokuapp|selenium|automationPractice")
     public Product.name product(String type) {
         return Product.name.valueOf(type);
     }

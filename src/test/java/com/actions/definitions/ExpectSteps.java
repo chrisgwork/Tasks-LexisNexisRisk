@@ -10,7 +10,7 @@ public class ExpectSteps {
 
     @Then("the {selectorType} {string} {shouldStatus} equal text {string}")
     public void selectorTypeContainsString(String selectorType1, String selector1, String shouldStatus, String selector2) {
-        TextElement element = new TextElement(DriverManager.getDriver())
+        TextElement element = new TextElement(DriverManager.get())
                 .by(selectorType1, selector1)
                 .by("text", selector2);
 

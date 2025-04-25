@@ -1,9 +1,9 @@
-@UI @webform
-Feature: Webform functionality
+@ui @webform
+Feature: Filling and submitting the webform
 
   @input
   Scenario Outline: Webform - User can fill their username - User <username>
-    Given I navigate to "/selenium/web/web-form.html" on product selenium
+    Given I navigate to "/web-form.html" on product selenium
     When I fill input by id "my-text-id" with text "<username>"
     Then I take a screenshot
 
@@ -14,7 +14,7 @@ Feature: Webform functionality
 
   @authentication
   Scenario Outline: Webform - User can fill their password - User <username>
-    Given I navigate to "/selenium/web/web-form.html" on product selenium
+    Given I navigate to "/web-form.html" on product selenium
     And I fill input by name "my-password" for user <username>
     Then I take a screenshot
 
@@ -25,7 +25,7 @@ Feature: Webform functionality
 
   @input
   Scenario Outline: Webform - User can verify a <status> input - No User
-    Given I navigate to "/selenium/web/web-form.html" on product selenium
+    Given I navigate to "/web-form.html" on product selenium
     Then the input with name "<name>" should be <status>
 
     Examples:
@@ -35,13 +35,13 @@ Feature: Webform functionality
 
   @textarea
   Scenario: Webform - User can fill a text area - No User
-    Given I navigate to "/selenium/web/web-form.html" on product selenium
+    Given I navigate to "/web-form.html" on product selenium
     And I fill input by name "my-textarea" with random word
     Then I take a screenshot
 
   @dropDown @datalist
   Scenario Outline: Webform - User can select <option> from dropdown datalist - No User
-    Given I navigate to "/selenium/web/web-form.html" on product selenium
+    Given I navigate to "/web-form.html" on product selenium
     And I fill input by text "Dropdown (datalist)" with text "<option>"
     Then I take a screenshot
 
@@ -54,8 +54,8 @@ Feature: Webform functionality
 
   @dropdown @select
   Scenario Outline: Webform - User can select <option> from dropdown select - No User
-    Given I navigate to "/selenium/web/web-form.html" on product selenium
-    And I fill dropdown box by text "Dropdown (select)" with option "<option>"
+    Given I navigate to "/web-form.html" on product selenium
+    And I fill dropdown box by text "Dropdown (select)" by class "form-select" with option "<option>"
     Then I take a screenshot
 
     Examples:
@@ -66,7 +66,7 @@ Feature: Webform functionality
 
   @file
   Scenario Outline: Webform - User can upload file <file_type> - No User
-    Given I navigate to "/selenium/web/web-form.html" on product selenium
+    Given I navigate to "/web-form.html" on product selenium
     And I fill file upload by name "my-file" with file <file_type>
     Then I take a screenshot
 
@@ -77,7 +77,7 @@ Feature: Webform functionality
 
   @checkbox
   Scenario Outline: Webform - User can <action> a checkbox - No User
-    Given I navigate to "/selenium/web/web-form.html" on product selenium
+    Given I navigate to "/web-form.html" on product selenium
     And I <action> the checkbox by id "<id>"
     Then I take a screenshot
 
@@ -88,25 +88,25 @@ Feature: Webform functionality
 
   @radioButton
   Scenario: Webform - User can check a radio button - No User
-    Given I navigate to "/selenium/web/web-form.html" on product selenium
+    Given I navigate to "/web-form.html" on product selenium
     And I check the radio button by id "my-radio-2"
     Then I take a screenshot
 
   @pickDate
   Scenario: Webform - User can pick a date from a calendar - No User
-    Given I navigate to "/selenium/web/web-form.html" on product selenium
+    Given I navigate to "/web-form.html" on product selenium
     And I fill input by name "my-date" with text "04/02/2025"
     Then I take a screenshot
 
   @pickColour
   Scenario: Webform - User can pick a colour from a colour picker - No User
-    Given I navigate to "/selenium/web/web-form.html" on product selenium
+    Given I navigate to "/web-form.html" on product selenium
     And I fill input by name "my-colors" with text "#dbff33"
     Then I take a screenshot
 
   @range
   Scenario Outline: Webform - User can slide range to value <value> - No User
-    Given I navigate to "/selenium/web/web-form.html" on product selenium
+    Given I navigate to "/web-form.html" on product selenium
     And I set range input by name "my-range" to value "<value>"
     Then I take a screenshot
 
@@ -117,7 +117,7 @@ Feature: Webform functionality
 
   @submit
   Scenario: Webform - User can submit form - No User
-    Given I navigate to "/selenium/web/web-form.html" on product selenium
+    Given I navigate to "/web-form.html" on product selenium
     And I click button by text "Submit"
     Then the class "col-12 py-2" should equal text "Received!"
     Then I take a screenshot

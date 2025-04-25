@@ -13,14 +13,14 @@ public class InputSteps {
 
     @When("I fill input by {selectorType} {string} with text {string}")
     public void fillInputBySelectorType(String selectorType, String selector, String text) {
-        new Input(DriverManager.getDriver())
+        new Input(DriverManager.get())
                 .by(selectorType, selector)
                 .fill(text);
     }
 
     @When("I fill input by {selectorType} {string} for user {username}")
     public void fillInputByDataTestIdPassword(String selectorType, String selector, String username) {
-        new Input(DriverManager.getDriver())
+        new Input(DriverManager.get())
                 .by(selectorType, selector)
                 .fill(CredentialManager.getPassword(username));
     }
@@ -36,14 +36,14 @@ public class InputSteps {
     @When("I fill input by {selectorType} {string} with random {randomValueType}")
     public void fillInputByDataTestIdWithAValue(String selectorType, String selector, String randomValueType) {
 
-        new Input(DriverManager.getDriver())
+        new Input(DriverManager.get())
                 .by(selectorType, selector)
                 .fill(randomValueMapper(randomValueType));
     }
 
     @When("the input with {selectorType} {string} {shouldStatus} be {inputStatus}")
     public void inputStatus(String selectorType, String selector, String shouldStatus, String inputStatus) {
-        Input element = new Input(DriverManager.getDriver())
+        Input element = new Input(DriverManager.get())
                 .by(selectorType, selector);
 
         boolean statusValue = switch (inputStatus) {

@@ -8,7 +8,7 @@ public class CheckBoxSteps {
 
     @When("I {checkStatus} the checkbox by {selectorType} {string}")
     public void actionCheckBoxBySelectorType(String checkStatus, String selectorType, String selector) {
-        CheckBox checkBox = new CheckBox(DriverManager.getDriver())
+        CheckBox checkBox = new CheckBox(DriverManager.get())
                 .by(selectorType, selector);
 
         if ("check".equals(checkStatus)) {

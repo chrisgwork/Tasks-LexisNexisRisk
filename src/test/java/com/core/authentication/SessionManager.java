@@ -5,28 +5,45 @@ import com.actions.drivers.Input;
 import com.actions.drivers.Navigate;
 import com.actions.drivers.utils.DriverManager;
 import com.core.enums.Product;
-import com.core.enums.UserType;
 import org.openqa.selenium.Cookie;
+import org.openqa.selenium.JavascriptExecutor;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class SessionManager {
-    private static final Map<String, Set<Cookie>> cachedSessions = new HashMap<>();
+    private static final Map<String, SessionState> cachedSessions = new HashMap<>();
+
+    private static class SessionState {
+        Set<Cookie> cookies;
+        Map<String, String> localStorage;
+
+        SessionState(Set<Cookie> cookies, Map<String, String> localStorage) {
+            this.cookies = cookies;
+            this.localStorage = localStorage;
+        }
+    }
+
+    private static String escapeForJs(String input) {
+        if (input == null) return "";
+        return input
+                .replace("\\", "\\\\")
+                .replace("'", "\\'")
+                .replace("\"", "\\\"")
+                .replace("\n", "\\n")
+                .replace("\r", "\\r");
+    }
 
     public static void set(Product.name product, String username) {
         String sessionKey = generateKey(product, username);
-
         if (!cachedSessions.containsKey(sessionKey)) {
             performLogin(product, username);
             saveSession(sessionKey);
             return;
         }
 
-        Set<Cookie> cookies = cachedSessions.get(sessionKey);
-        boolean sessionExpired = cookies.stream()
-                .anyMatch(cookie -> CookieManager.hasExpired(String.valueOf(cookie)));
+        SessionState state = cachedSessions.get(sessionKey);
+        boolean sessionExpired = state.cookies.stream()
+                .anyMatch(CookieManager::hasExpired);
 
         if (sessionExpired) {
             performLogin(product, username);
@@ -34,30 +51,52 @@ public class SessionManager {
             return;
         }
 
-        new Navigate(DriverManager.getDriver()).to(product);
+        new Navigate(DriverManager.get()).to(product);
         restoreSession(sessionKey);
     }
 
     private static void restoreSession(String sessionKey) {
-        Set<Cookie> cookies = cachedSessions.get(sessionKey);
-        for (Cookie cookie : cookies) {
-            DriverManager.getDriver().manage().addCookie(cookie);
+        System.out.println("used cache");
+        SessionState state = cachedSessions.get(sessionKey);
+
+        for (Cookie cookie : state.cookies) {
+            DriverManager.get().manage().addCookie(cookie);
         }
-        DriverManager.getDriver().navigate().refresh();
+
+        for (Map.Entry<String, String> entry : state.localStorage.entrySet()) {
+            String escapedKey = escapeForJs(entry.getKey());
+            String escapedValue = escapeForJs(entry.getValue());
+
+            String script = String.format("localStorage.setItem('%s', '%s');", escapedKey, escapedValue);
+            ((JavascriptExecutor) DriverManager.get()).executeScript(script);
+        }
+
+        DriverManager.get().navigate().refresh();
     }
 
     private static void saveSession(String sessionKey) {
-        cachedSessions.put(sessionKey, DriverManager.getDriver().manage().getCookies());
+        Set<Cookie> cookies = DriverManager.get().manage().getCookies();
+
+        Map<String, String> localStorage = (Map<String, String>) ((JavascriptExecutor) DriverManager.get())
+                .executeScript(
+                        "let items = {}; " +
+                                "for (let i = 0; i < localStorage.length; i++) { " +
+                                "  let key = localStorage.key(i); " +
+                                "  items[key] = localStorage.getItem(key); " +
+                                "} return items;"
+                );
+
+        cachedSessions.put(sessionKey, new SessionState(cookies, localStorage));
     }
 
     private static void performLogin(Product.name product, String username) {
-        new Navigate(DriverManager.getDriver()).to(product);
-        new Input(DriverManager.getDriver()).by("name","username").fill(username);
-        new Input(DriverManager.getDriver()).by("name", "password").fill(CredentialManager.getPassword(username));
-        new Button(DriverManager.getDriver()).by("text", "Login").is("button").click();
+        new Navigate(DriverManager.get()).to(product, "/login");
+        new Input(DriverManager.get()).by("name", "username").fill(username);
+        new Input(DriverManager.get()).by("name", "password").fill(CredentialManager.getPassword(username));
+        new Button(DriverManager.get()).by("text", "Login").is("button").click();
     }
 
-    private static String generateKey(Product.name product, String  username) {
+    private static String generateKey(Product.name product, String username) {
         return product.name() + "_" + username;
     }
 }

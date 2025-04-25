@@ -23,7 +23,7 @@ public class DebugSteps {
 
     @And("I take a screenshot")
     public void takeAScreenshot() {
-        final byte[] screenshot = ((TakesScreenshot) DriverManager.getDriver())
+        final byte[] screenshot = ((TakesScreenshot) DriverManager.get())
                 .getScreenshotAs(OutputType.BYTES);
         scenario.attach(screenshot, "image/png", "Debug Screenshot");
     }
