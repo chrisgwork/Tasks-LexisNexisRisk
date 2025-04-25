@@ -52,12 +52,13 @@ public class SessionManager {
         }
 
         new Navigate(DriverManager.get()).to(product);
-        restoreSession(sessionKey);
+        restoreSession(product, sessionKey);
     }
 
-    private static void restoreSession(String sessionKey) {
-        System.out.println("used cache");
+    private static void restoreSession(Product.name product, String sessionKey) {
         SessionState state = cachedSessions.get(sessionKey);
+
+        new Navigate(DriverManager.get()).to(product);
 
         for (Cookie cookie : state.cookies) {
             DriverManager.get().manage().addCookie(cookie);
@@ -90,10 +91,10 @@ public class SessionManager {
     }
 
     private static void performLogin(Product.name product, String username) {
-        new Navigate(DriverManager.get()).to(product, "/login");
-        new Input(DriverManager.get()).by("name", "username").fill(username);
+        new Navigate(DriverManager.get()).to(product);
+        new Input(DriverManager.get()).by("name", "user-name").fill(username);
         new Input(DriverManager.get()).by("name", "password").fill(CredentialManager.getPassword(username));
-        new Button(DriverManager.get()).by("text", "Login").is("button").click();
+        new Button(DriverManager.get()).by("name", "login-button").click();
     }
 
     private static String generateKey(Product.name product, String username) {

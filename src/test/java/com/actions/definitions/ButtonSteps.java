@@ -9,11 +9,11 @@ import static org.junit.Assert.assertTrue;
 
 public class ButtonSteps {
 
-    @When("I click button by {selectorType} {string}")
-    public void clickButtonByDataTestSelectorType(String selectorType, String dataTestId) {
+    @When("I click {clickableType} by {selectorType} {string}")
+    public void clickButtonByDataTestSelectorType(String clickableType, String selectorType, String dataTestId) {
         new Button(DriverManager.get())
                 .by(selectorType, dataTestId)
-                .is("button")
+                .is(clickableType)
                 .click();
     }
 

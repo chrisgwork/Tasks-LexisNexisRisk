@@ -6,12 +6,12 @@ import io.cucumber.java.ParameterType;
 
 public class ParamTypes {
 
-    @ParameterType("exampleuser1|exampleuser2|tomsmith")
+    @ParameterType("exampleuser1|exampleuser2|standard_user|locked_out_user|problem_user|performance_glitch_user|error_user|visual_user")
     public String username(String type) {
         return UserRegistry.getUserByName(type).getUsername();
     }
 
-    @ParameterType("herokuapp|selenium|automationPractice")
+    @ParameterType("saucedemo|selenium|automationPractice")
     public Product.name product(String type) {
         return Product.name.valueOf(type);
     }
@@ -26,6 +26,11 @@ public class ParamTypes {
 
     @ParameterType("text|class|label|dataTest|name|id")
     public String selectorType(String type) {
+        return type;
+    }
+
+    @ParameterType("button|a|input")
+    public String clickableType(String type) {
         return type;
     }
 

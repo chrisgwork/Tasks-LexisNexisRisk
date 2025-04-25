@@ -12,7 +12,7 @@ public enum BaseUrl {
         switch (this) {
             case UI -> {
                 return switch (product) {
-                    case herokuapp -> "https://the-internet.herokuapp.com";
+                    case saucedemo -> "https://www.saucedemo.com";
                     case selenium -> "https://www.selenium.dev/selenium/web";
                     default -> throw new IllegalArgumentException("Unknown Product for UI: " + product);
                 };
